@@ -7,10 +7,27 @@ import { ExamResultComponent } from './exam-result/exam-result.component';
 import { ExamListComponent } from './exam-list/exam-list.component';
 
 import { CanDeactivateComponent } from '../Guards/can-leave-exam.guard';
+import { CanActivateUserComponentGuard } from '../Guards/can-activate-user-component.guard';
 
 export const EXAM_ROUTES: Routes = [
-  { path: ':id', component: ExamAttempComponent, canDeactivate: [CanDeactivateComponent] },
-  { path: 'submit/:id', component: ExamQuickResultComponent },
-  { path: 'result/:id', component: ExamResultComponent },
-  { path: '', component: ExamListComponent },
+  {
+    path: ':id',
+    component: ExamAttempComponent,
+    canActivate: [ CanActivateUserComponentGuard ],
+    canDeactivate: [ CanDeactivateComponent ]
+  },
+  {
+    path: 'submit/:id',
+    component: ExamQuickResultComponent,
+    canActivate: [ CanActivateUserComponentGuard ]
+  },
+  {
+    path: 'result/:id',
+    component: ExamResultComponent,
+    canActivate: [ CanActivateUserComponentGuard ]
+  },
+  {
+    path: '',
+    component: ExamListComponent
+  },
 ];

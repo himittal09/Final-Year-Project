@@ -34,7 +34,8 @@ export class DisplayExamComponent implements OnInit {
       this.submissionError = 0;
       this.exam = response.json();
       if (this.exam.questions.length) {
-        this.selectQuestionForDisplay(this.exam.questions[0]._id, 1);
+        this.question = this.exam.questions[0];
+        this.selectedQuestionNumber = 1;
       }
     }, (error: any) => {
       if (error.status === 401) {

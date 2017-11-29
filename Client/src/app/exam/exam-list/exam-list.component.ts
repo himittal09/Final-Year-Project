@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
 
 import { Exam } from '../../Classes';
 import { ExamService } from '../exam.service';
@@ -19,12 +19,13 @@ export class ExamListComponent implements OnInit {
   isexamFetchingFailure = -1;
   examReturns: string[];
 
-  constructor(private examService: ExamService, private router: Router, private isAuthenticatedService: IsAuthenticatedService) { }
+  constructor(
+    private examService: ExamService,
+    private router: Router,
+    private isAuthenticatedService: IsAuthenticatedService
+  ) { }
 
   ngOnInit() {
-    if (!this.isAuthenticatedService.isUserAuthenticated()) {
-      return this.isexamFetchingFailure = 1;
-    }
     this.subscription = this.examService.getExamList().subscribe((response: Response) => {
       this.examList = response.json().exams;
       this.examReturns = response.json().examReturns;
@@ -48,9 +49,7 @@ export class ExamListComponent implements OnInit {
     });
   }
 
-  // 'name', 'description', 'allowedTime', 'subject', 'createdAt', '_id'
-
-  redirecttoExam(examId: string) {
+  redirecttoExam(examId: string): void {
 
     const elem = document.documentElement; // Make the body go full screen.
     this.requestFullScreen(elem);
@@ -58,11 +57,11 @@ export class ExamListComponent implements OnInit {
     this.router.navigate(['exam', examId]);
   }
 
-  redirectToResult(examId: string) {
+  redirectToResult(examId: string): void {
     this.router.navigate(['exam', 'result', examId]);
   }
 
-  requestFullScreen (element: any) {
+  requestFullScreen (element: any): void {
     // Supports most browsers and their versions.
     if (element.requestFullScreen) {
       element.requestFullScreen();

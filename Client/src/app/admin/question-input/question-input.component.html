@@ -225,7 +225,7 @@
 
           <div class="alert alert-dismissible alert-success" *ngIf="isSubmissionFailed == 0">
             <button type="button" class="close" data-dismiss="alert" (click)="resetIsSubmissionFailed()">&times;</button>
-            <p>
+            <p class="lead">
               <strong>Success!</strong>
               The Question has been submitted in the database with id {{lastSubmittedQuestionId}}. You can continue to fed more questions to the exam.
             </p>
@@ -235,13 +235,16 @@
 
         <div class="panel panel-error" *ngIf="isSubmissionFailed == 1">
           <div class="panel-body">
-            <p>You seem to be unauthenticated from the server. Login <a [routerLink]="['/admin', 'login']">here</a>!!</p>
+            <p class="lead">
+              You seem to be unauthenticated from the server. Login 
+              <a [routerLink]="['/admin', 'login']">here</a>!!
+            </p>
           </div>
         </div>
 
         <div class="panel panel-error" *ngIf="isSubmissionFailed == 2">
           <div class="panel-body">
-            <p>
+            <p class="lead">
               <strong>Oh No!</strong>
               The Object ID you inputted seems to be incorrect. Input a correct Object ID for Exam!!
             </p>
@@ -250,7 +253,7 @@
 
         <div class="panel panel-error" *ngIf="isSubmissionFailed == 3">
           <div class="panel-body">
-            <p>
+            <p class="lead">
               <strong>Oops!</strong>
               The store has no exam with the id {{id}}. Try giving the ID an check!!
             </p>
@@ -259,7 +262,7 @@
 
         <div class="panel panel-error" *ngIf="isSubmissionFailed == 4">
           <div class="panel-body">
-            <p>
+            <p class="lead">
               <strong>Oh snap!</strong>
               There seems to be a technical problem with the server, or the connection, Please Try Again later.
             </p>

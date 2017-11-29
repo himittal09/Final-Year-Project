@@ -36,8 +36,7 @@
                       for="description">Exam Description:
                 </label>
                 <div class="col-lg-10" [ngClass]="{
-                  'has-error': (examForm.controls.description.touched && !examForm.controls.description.valid),
-                  'has-success': (examForm.controls.description.valid && examForm.controls.description.touched)
+                  'has-error': (examForm.controls.description.touched && !examForm.controls.description.valid)
                 }">
                   <input type="text"
                         id="description"
@@ -94,8 +93,14 @@
         
               <div class="form-group row">
                 <div class="col-lg-10 col-lg-offset-2">
-                  <button type="reset" class="btn btn-default" (click)="examForm.reset()">Clear</button>
-                  <button type="submit" class="btn btn-primary" [disabled]="!examForm.valid">Submit</button>
+                  <button type="reset"
+                          class="btn btn-default"
+                          (click)="examForm.reset()">Clear
+                  </button>
+                  <button type="submit"
+                          class="btn btn-primary"
+                          [disabled]="!examForm.valid">Submit
+                  </button>
                 </div>
               </div>
         
@@ -105,14 +110,22 @@
 
         <div class="panel panel-error" *ngIf="submissionError == 1">
           <div class="panel-body">
-            <p class="lead"><strong>Oh snap!</strong>You appear to not synchronised from the server, please login <a [routerLink]="['/admin', 'login']">here</a> again</p>
+            <p class="lead">
+              <strong>Oh snap!</strong>
+              You appear to not synchronised from the server, please login 
+              <a [routerLink]="['/admin', 'login']">here</a> again
+            </p>
           </div>
         </div>
         
         <div class="panel panel-error" *ngIf="submissionError == 2">
           <div class="panel-body">
-            <strong>Oh snap!</strong>
-            We could not submit the exam, contact the System Dev Immidieatly<a [routerLink]="['/about']">Here</a>!!
+            <p class="lead">
+              <strong>Oh snap!</strong>
+              We could not submit the exam, contact the System Dev Immidieatly 
+              <a [routerLink]="['/about']">Here</a>!!
+            </p>
+  
           </div>
         </div>
 

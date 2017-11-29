@@ -4,12 +4,6 @@ import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 
 import { ExamService } from '../exam.service';
-import {
-  getArtHistoryInspiredColorScheme,
-  getModernAndCleanColorScheme,
-  getMutedAndMinimalColorScheme,
-  getSubduedAndProfessional
-} from '../../Shared/getColorSchemes';
 
 import {
   User,
@@ -19,10 +13,6 @@ import {
   QuestionAnswer,
   ExamAnalysis,
   AggregateExamQuestionAnalysis,
-  NormailzedHorizontalBarChart,
-  AreaChart,
-  LineChart,
-  NumberCard,
   GraphData,
   SeriesData,
   ColorScheme,
@@ -39,7 +29,6 @@ export class ExamResultComponent implements OnInit {
 
   id: string;
   subscription: Subscription;
-  analysisData: any;
   questions: Question[];
   questionAnswers: QuestionAnswer[];
   aggregateExamQuestionAnalysis: AggregateExamQuestionAnalysis[];
@@ -55,15 +44,16 @@ export class ExamResultComponent implements OnInit {
   marksComparison: GraphDataSet;
   timeComparison: GraphDataSet;
 
-  constructor(private examService: ExamService, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private examService: ExamService,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.id = this.activatedRoute.snapshot.params['id'];
   }
 
   ngOnInit() {
     this.subscription = this.examService.getExamResult(this.id).subscribe((response: any) => {
-      // this.analysisData = response.json();
 
-      //
       this.questions = response.questions;
       delete response.questions;
 
@@ -122,7 +112,9 @@ export class ExamResultComponent implements OnInit {
       // for each question, use 35 as height, and add 50 in total after calculation for the x axis display
       // 35 * 10 question  = 350, 350 + 50 for x axis = 400 total height
 
-    }, (error: any) => console.error(error), () => this.subscription.unsubscribe());
+    }, (error: any) => {
+      console.error(error);
+    }, () => this.subscription.unsubscribe());
   }
 
   hasID (arrayTwoId, arrayOne, arrayOneKey): number {
@@ -285,6 +277,6 @@ export class ExamResultComponent implements OnInit {
         '#234b51',
         '#763726'
     ]);
-}
+  }
 
 }

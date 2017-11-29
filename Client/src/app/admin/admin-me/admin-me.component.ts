@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
 
 import { AdminService } from '../admin.service';
 import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
@@ -48,8 +48,10 @@ export class AdminMeComponent implements OnInit {
 
   syncWithServer (): void {
     if (this.syncStatus === 1) {
+      this.syncStatus = 0;
       this.isAuthenticatedService.authenticateAdmin();
     } else if (this.syncStatus === 2) {
+      this.syncStatus = 0;
       this.isAuthenticatedService.unAuthenticate();
     }
   }

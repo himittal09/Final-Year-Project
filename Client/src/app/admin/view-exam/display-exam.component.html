@@ -82,7 +82,10 @@
               <h2>Questions:</h2>
 
               <ul class="list-group centre">
-                <a *ngFor="let question of exam.questions; let questionId = index" class="btn btn-large btn-primary listButton" (click)="selectQuestionForDisplay(question._id, (questionId+1))">{{questionId+1}}</a>
+                <a *ngFor="let question of exam.questions; let questionId = index"
+                  class="btn btn-large btn-primary listButton"
+                  (click)="selectQuestionForDisplay(question._id, (questionId+1))">{{questionId+1}}
+                </a>
               </ul>      
 
               <fieldset>
@@ -231,15 +234,16 @@
         <div>
           <div class="panel panel-error" *ngIf="submissionError == 1">
             <div class="panel-body">
-              <p>
-                You seem to be unauthenticated from the server. Login <a [routerLink]="['/admin']">here</a>!!
+              <p class="lead">
+                You seem to be unauthenticated from the server. Login 
+                <a [routerLink]="['/admin']">here</a>!!
               </p>
             </div>
           </div>
   
           <div class="panel panel-error" *ngIf="submissionError == 2">
             <div class="panel-body">
-              <p>
+              <p class="lead">
                 <strong>Oh No!</strong>
                 The Object ID you inputted seems to be incorrect. Input a correct Object ID for Exam!!
               </p>
@@ -248,7 +252,7 @@
       
           <div class="panel panel-error" *ngIf="submissionError == 3">
             <div class="panel-body">
-              <p>
+              <p class="lead">
                 <strong>Oops!</strong>
                 The store has no exam with the id {{id}}. Try giving the ID an check!!
               </p>
@@ -257,7 +261,7 @@
   
           <div class="panel panel-error" *ngIf="submissionError == 4">
             <div class="panel-body">
-              <p>
+              <p class="lead">
                 <strong>Oh snap!</strong>
                 There seems to be a technical problem with the server, or the connection. Please Try Again later
               </p>

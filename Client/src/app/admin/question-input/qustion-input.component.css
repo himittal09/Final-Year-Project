@@ -11,3 +11,7 @@
 button.btn {
     margin-left: 5px;
 }
+
+.input-group-addon {
+    font-weight: 800;
+}

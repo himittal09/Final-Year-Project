@@ -1,9 +1,4 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
 export class IsAuthenticatedService {
-
-  constructor() { }
 
   isUserAuthenticated () {
     if (window.sessionStorage.getItem('isAuthenticated')) {

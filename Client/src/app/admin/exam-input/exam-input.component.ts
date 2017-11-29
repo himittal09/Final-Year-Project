@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { AdminService } from '../admin.service';
 import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
-import { Question } from '../../Classes/question';
+import { Question } from '../../Classes';
 
 @Component({
   selector: 'fyp-exam-input',

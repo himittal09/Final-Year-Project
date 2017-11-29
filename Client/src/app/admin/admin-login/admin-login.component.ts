@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs/Rx';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { setTimeout } from 'timers';
+import { Subscription } from 'rxjs/Rx';
 
 import { AdminService } from '../admin.service';
 import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';

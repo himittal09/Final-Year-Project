@@ -62,8 +62,10 @@ export class UserMeComponent implements OnInit {
 
   syncWithServer (): void {
     if (this.syncStatus === 1) {
+      this.syncStatus = 0;
       this.isAuthenticatedService.authenticateUser();
     } else if (this.syncStatus === 2) {
+      this.syncStatus = 0;
       this.isAuthenticatedService.unAuthenticate();
     }
   }

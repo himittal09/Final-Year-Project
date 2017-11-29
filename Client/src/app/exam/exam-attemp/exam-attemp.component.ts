@@ -83,6 +83,7 @@ export class ExamAttempComponent implements OnInit {
       this.examForm = new FormGroup({
         'questionAnswers': new FormArray([])
       });
+
       (<Question[]>this.exam.questions).forEach((question, index) => {
         (<FormArray>this.examForm.controls.questionAnswers).push(new FormControl());
       });

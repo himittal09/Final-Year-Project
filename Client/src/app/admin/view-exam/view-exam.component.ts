@@ -28,7 +28,6 @@ export class ViewExamComponent implements OnInit {
     this.subscription = this.examService.getExamList().subscribe((response: Response) => {
       this.examList = response.json();
       this.isexamFetchingFailure = 0;
-      console.log(this.examList);
     }, (error: any) => {
       console.error(error);
       if (error.status === 401) {

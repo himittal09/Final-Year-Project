@@ -41,6 +41,10 @@ import { CanDeactivateComponent } from './Guards/can-leave-exam.guard';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 
+import { CanActivateAdminComponentGuard } from './Guards/can-activate-admin-component.guard';
+import { CanActivateUnprotectedComponentGuard } from './Guards/can-activate-unprotected-component.guard';
+import { CanActivateUserComponentGuard } from './Guards/can-activate-user-component.guard';
+
 declare let require: any;
 
 @NgModule({
@@ -81,7 +85,10 @@ declare let require: any;
     AdminService,
     IsAuthenticatedService,
     ExamService,
-    CanDeactivateComponent
+    CanDeactivateComponent,
+    CanActivateAdminComponentGuard,
+    CanActivateUnprotectedComponentGuard,
+    CanActivateUserComponentGuard
   ],
   bootstrap: [AppComponent]
 })

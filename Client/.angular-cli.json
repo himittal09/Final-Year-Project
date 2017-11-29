@@ -8,8 +8,9 @@
       "root": "src",
       "outDir": "dist",
       "assets": [
-        "assets",
-        "favicon.ico"
+        { "glob": "**/*", "input": "./assets/Images/", "output": "./assets/Images/" },
+        { "glob": "**/*", "input": "./assets/StyleSheets/", "output": "./assets/StyleSheets/" },
+        { "glob": "**/*", "input": "./assets/Javascript/", "output": "./assets/Javascript/" }
       ],
       "index": "index.html",
       "main": "main.ts",

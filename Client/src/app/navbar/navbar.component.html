@@ -23,9 +23,9 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a style="cursor:pointer" *ngIf="ifAuthenticated()" (click)="logout()"><span class="glyphicon glyphicon-log-in"></span>  Logout</a></li>
-        <li><a [routerLink]="['user', 'login']" *ngIf="!ifAuthenticated()"><span class="glyphicon glyphicon-log-in"></span>  Login</a></li>
-        <li *ngIf="!ifAuthenticated()"><a [routerLink]="['user', 'signup']"><span class="glyphicon glyphicon-user"></span>  Register</a></li>
+        <li><a style="cursor:pointer" *ngIf="ifAuthenticated()" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>  Logout</a></li>
+        <li><a [routerLink]="['user', 'login']" *ngIf="!ifAuthenticated()"><i class="fa fa-sign-in" aria-hidden="true"></i>  Login</a></li>
+        <li *ngIf="!ifAuthenticated()"><a [routerLink]="['user', 'signup']"><i class="fa fa-user-plus" aria-hidden="true"></i>  Register</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
     

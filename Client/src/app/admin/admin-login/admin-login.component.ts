@@ -39,6 +39,7 @@ export class AdminLoginComponent implements OnInit {
       this.isAuthenticatedService.authenticateAdmin();
       this.router.navigate(['/admin']);
     }, (error: any) => {
+      console.error(error);
       if (error.status === 405) {
         if (this.isAuthenticatedService.isAdminAuthenticated()) {
           return this.router.navigate(['/admin']);

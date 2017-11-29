@@ -1,21 +1,5 @@
 import { ColorScheme } from '../Classes';
 
-function getVividColorScheme () {}
-function getNaturalColorScheme () {}
-function getCoolColorScheme () {}
-function getFireColorScheme () {}
-function getSolarColorScheme () {}
-function getAirColorScheme () {}
-function getAquaColorScheme () {}
-function getFlameColorScheme () {}
-function getOceanColorScheme () {}
-function getForestColorScheme () {}
-function getHorizonColorScheme () {}
-function getNeonsColorScheme () {}
-function getPicnicColorScheme () {}
-function getNightColorScheme () {}
-function getNightLightsColorScheme () {}
-
 function getArtHistoryInspiredColorScheme () {
     return new ColorScheme([
         '#FFCE00',
@@ -43,8 +27,29 @@ function getModernAndCleanColorScheme () {
     ]);
 }
 
+
+function getSubduedAndProfessional () {
+    return new ColorScheme([
+        '#90AFC5',
+        '#d8efff',
+        '#336B87',
+        '#145170',
+        '#006da5',
+        '#2A3132',
+        '#234b51',
+        '#763726',
+        '#b7624b',
+        '#4f2b21',
+        '#5e4b46',
+        '#a83112',
+        '#211411'
+    ]);
+}
+
 export {
     getModernAndCleanColorScheme,
     getMutedAndMinimalColorScheme,
-    getArtHistoryInspiredColorScheme
+    getArtHistoryInspiredColorScheme,
+    getSubduedAndProfessional
 };
+

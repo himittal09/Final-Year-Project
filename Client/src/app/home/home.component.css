@@ -21,7 +21,7 @@ header h2:after {
     border-radius: 2px;
 }
 
-*:before, *:after {
+*, *:before, *:after {
     box-sizing: border-box;
 }
 
@@ -63,7 +63,7 @@ section.main {
 }
 
 p {
-    font-size: 17px;
+    font-size: 18px;
 }
 
 
@@ -90,12 +90,53 @@ p {
 .icon-wrapper {
     display: inline-block;
 }
-  
 
-/* 
-i.fa {
-    display: inline-block;
-    border-radius: 60px;
-    box-shadow: 0px 0px 2px #888;
-    padding: 0.5em 0.6em;
-  } */
+
+
+
+
+
+/*
+
+
+.statistics {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    list-style: none;
+}
+
+.statistics li:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.statistics li:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.statistics li.style1 {
+    background-color: #efa8b0;
+}
+.statistics li.style2 {
+    background-color: #efa8b0;
+}
+.statistics li.style3 {
+    background-color: #efa8b0;
+}
+.statistics li.style4 {
+    background-color: #efa8b0;
+}
+.statistics li.style5 {
+    background-color: #efa8b0;
+}
+
+.statistics li {
+    color: #000000;
+    text-align: center;
+}
+
+li {
+    display: list-item;
+}
+*/

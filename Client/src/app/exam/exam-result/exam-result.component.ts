@@ -7,7 +7,8 @@ import { ExamService } from '../exam.service';
 import {
   getArtHistoryInspiredColorScheme,
   getModernAndCleanColorScheme,
-  getMutedAndMinimalColorScheme
+  getMutedAndMinimalColorScheme,
+  getSubduedAndProfessional
 } from '../../Shared/getColorSchemes';
 
 import {
@@ -86,13 +87,13 @@ export class ExamResultComponent implements OnInit {
 
       this.percentWhoAttemptedDataSet = {
         graphData: this.mapPercentWhoAttempted(),
-        graphColorScheme: this.getArtHistoryInspiredColorScheme(),
+        graphColorScheme: this.getSubduedAndProfessional(),
         graphSize: [undefined, ((this.aggregateExamQuestionAnalysis.length * 35) + 50)]
       };
 
       this.percentWhoGotRight = {
         graphData: this.mapPercentWhoGotRight(),
-        graphColorScheme: this.getArtHistoryInspiredColorScheme(),
+        graphColorScheme: this.getSubduedAndProfessional(),
         graphSize: [undefined, ((this.aggregateExamQuestionAnalysis.length * 35) + 50)]
       };
 
@@ -100,19 +101,19 @@ export class ExamResultComponent implements OnInit {
 
       this.studentsAttempted = {
         graphData: this.mapStudentsAttempted(),
-        graphColorScheme: this.getArtHistoryInspiredColorScheme(),
+        graphColorScheme: this.getSubduedAndProfessional(),
         graphSize: [(browserWindowWidth - (browserWindowWidth / 10)), undefined]
       };
 
       this.marksComparison = {
         graphData: this.mapMarksObtained(),
-        graphColorScheme: this.getArtHistoryInspiredColorScheme(),
+        graphColorScheme: this.getSubduedAndProfessional(),
         graphSize: [undefined, undefined]
       };
 
       this.timeComparison = {
         graphData: this.mapTimeTaken(),
-        graphColorScheme: this.getArtHistoryInspiredColorScheme(),
+        graphColorScheme: this.getSubduedAndProfessional(),
         graphSize: [undefined, undefined]
       };
 
@@ -268,13 +269,22 @@ export class ExamResultComponent implements OnInit {
   // questions key _id 9 fields
   // questionAnswers key question 5 fields
 
-  getArtHistoryInspiredColorScheme (): ColorScheme {
+  getSubduedAndProfessional () {
     return new ColorScheme([
-        '#FFCE00',
-        '#0375B4',
-        '#007849',
-        '#262228'
+        '#90AFC5',
+        '#b7624b',
+        '#d8efff',
+        '#2A3132',
+        '#4f2b21',
+        '#336B87',
+        '#5e4b46',
+        '#145170',
+        '#a83112',
+        '#006da5',
+        '#211411',
+        '#234b51',
+        '#763726'
     ]);
-  }
+}
 
 }

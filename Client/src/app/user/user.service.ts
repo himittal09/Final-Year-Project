@@ -1,8 +1,8 @@
+import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
 
-import { User } from '../Classes/user';
+import { User } from '../Classes';
 
 @Injectable()
 export class UserService {

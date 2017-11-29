@@ -27,9 +27,6 @@
                         formControlName="firstName"
                         required
                         maxlength="15">
-                  <!-- <ul class="help-block list-group">
-                    <li *ngIf="(loginForm.controls.firstName.errors?.required && loginForm.controls.firstName.dirty)" class="list-group-item">First Name is Required</li>
-                  </ul> -->
                 </div>
               </div>
         
@@ -59,9 +56,6 @@
                         formControlName="lastName"
                         required
                         maxlength="15">
-                  <!-- <ul class="help-block">
-                    <li *ngIf="(loginForm.controls.lastName.errors?.required && loginForm.controls.lastName.dirty)" class="list-group-item">Last Name is Required</li>
-                  </ul> -->
                 </div>
               </div>
         
@@ -84,9 +78,6 @@
                   <span class="help-block list-group-item" *ngIf="(loginForm.controls.email.errors?.emailUniqueValidator && loginForm.controls.email.dirty)">
                       This Email is already Registered with us!
                   </span>
-                  <!-- <ul class="help-block list-group">
-                    <li *ngIf="(loginForm.controls.email.errors?.email && loginForm.controls.email.dirty)" class="list-group-item">Invalid Email</li>
-                  </ul> -->
                 </div>
               </div>
         
@@ -106,9 +97,6 @@
                         formControlName="phoneNumber"
                         required
                         maxlength="14">
-                  <!-- <ul class="help-block list-group">
-                    <li *ngIf="(loginForm.controls.phoneNumber.errors?.phoneNumberValidator && loginForm.controls.phoneNumber.dirty)" class="list-group-item">Invalid Phone Number</li>
-                  </ul> -->
                 </div>
               </div>
         
@@ -144,9 +132,6 @@
                         formControlName="studentClass"
                         required
                         maxlength="50">
-                  <!-- <ul class="help-block list-group">
-                    <li *ngIf="(loginForm.controls.studentClass.errors?.required && loginForm.controls.studentClass.dirty)" class="list-group-item">Class is required</li>
-                  </ul> -->
                 </div>
               </div>
           
@@ -187,9 +172,6 @@
                         minlength="8"
                         maxlength="64"
                         formControlName="confirm">
-                  <!-- <ul class="help-block list-group">
-                    <li *ngIf="(loginForm.errors?.matchingPasswords && loginForm.controls.confirm.dirty && loginForm.controls.password.dirty)" class="list-group-item">Passwords Doesnot Match</li>
-                  </ul> -->
                 </div>
               </div>
         
@@ -216,7 +198,7 @@
           </form>
         </div>
 
-        <div class="panel panel-success" *ngIf="isRegistrationFailure==0">
+        <div class="panel panel-success" *ngIf="isRegistrationFailure == 0">
           <div class="panel-body">
             <div class="lead">
               <strong>Bingo!</strong> You are registered with us. You will be shortly redirected to appear for exams. Click <a [routerLink]="['/exam']" class="alert-link">here</a> to view all exams now. 
@@ -224,7 +206,7 @@
           </div>
         </div>
   
-        <div class="panel panel-error" *ngIf="isLoginFailure == 1">
+        <div class="panel panel-error" *ngIf="isRegistrationFailure == 1">
           <div class="panel-body">
             <p class="lead"><strong>Oh snap!</strong> We couldnot sign you up! There was some error while saving your data into the database. Please try again later or contact the system Administrator. The error has been logged into your console!</p>
           </div>

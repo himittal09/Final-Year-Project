@@ -5,7 +5,7 @@ import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 
 import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
-import { User } from '../../Classes/user';
+import { User } from '../../Classes';
 import { UserService } from '../user.service';
 
 const validator = require('validator');

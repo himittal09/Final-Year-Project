@@ -49,63 +49,64 @@ const AggregateExamQuestionAnalysisSchema = new mongoose.Schema({
  * Document Method
  */
 AggregateExamQuestionAnalysisSchema.methods.calculateComparableQuestionDataByDocument = function () {
-    
-    // this = aggregateExamQuestionAnalysis;
-    //questionAnswers.length number of students who attempted this question
 
-    aggregateExamQuestionAnalysis = this;
+    return new Promise((resolve, reject) => {
+
+        QuestionAnswer.find({exam: this.exam, question: this.question}).select('isAnswerCorrect marksObtained timeTaken -_id').then((questionAnswers) => {
+            
+            // if no answers has been submitted for this question, rejecting the request for anaysis of the question
+            if (questionAnswers.length === 0) return reject('No Question Arnswers length, rejecting request');
+    
+            //calculating values for these two keys
+            this.cutOff = pluckAndReduce(questionAnswers, 'marksObtained');
+            this.avreageTimeTakenByStudents = pluckAndReduce(questionAnswers, 'timeTaken');
+    
+            //total students who attempted this question
+            this.studentsAttempted = questionAnswers.length;
+    
+            //further calculation requires total number of students who attempted the exam
+            //finding the total number of students wo attempted the exam
+            return ExamReturn.find({exam: this.exam}).count((error, totalStudentWhoAttemptedExam) => {
+    
+                //handling any potential errors
+                if (error) return reject(error);
+                if (totalStudentWhoAttemptedExam <= 0) return reject('No students who have attempted exam, rejecting request');
+    
+                //calculating percentages based keys here
+                this.percentageOfStudentWhoAttempted = questionAnswers.length * 100 / totalStudentWhoAttemptedExam;
+                
+                //last two value requires the average times taken by students who got this question right
+                //mapping queestions answers to find the Answer which are correct and array of time taken
+                var correctAnswerTimes = [];
+                questionAnswers.map((questionAnswer) => {
+                    if (questionAnswer.isAnswerCorrect) return correctAnswerTimes.push(questionAnswer.timeTaken);
+                });
+    
+                //correctanswerTimes.length number of students who attempted this question and got right
+    
+                this.percentageOfStudentWhoAttemptedGotThisQuestionRight = correctAnswerTimes.length * 100 / questionAnswers.length;
+    
+                // if some student has done this question right, finding the aerage tme for the right answer
+                if (correctAnswerTimes.length) {
+                    this.avreageTimeTakenByStudentsWhoGotThisQuestionRight = _.reduce( correctAnswerTimes, (total, n) => total+n ) / questionAnswers.length;
+    
+                    // if no students has done the answer correctly, setting the value to 0
+                } else {
+                    this.avreageTimeTakenByStudentsWhoGotThisQuestionRight = 0;
+                }
+    
+                //saving the document, returning the promise
+                this.save().then(doc => resolve(doc), error => reject(doc));
+            });
+    
+            //handling any potential errors
+        }, (error) => reject(error));
+    
+
+    });
 
     //finding Submitted answers of this exam and question
-    return QuestionAnswer.find({exam: this.exam, question: this.question}).select('isAnswerCorrect marksObtained timeTaken -_id').then(questionAnswers => {
-        
-        // if no answers has been submitted for this question, rejecting the request for anaysis of the question
-        if (questionAnswers.length === 0) return Promise.reject('No Question Arnswers length, rejecting request');
-
-        //calculating values for these two keys
-        this.cutOff = pluckAndReduce(questionAnswers, 'marksObtained');
-        this.avreageTimeTakenByStudents = pluckAndReduce(questionAnswers, 'timeTaken');
-
-        //total students who attempted this question
-        this.studentsAttempted = questionAnswers.length;
-
-        //further calculation requires total number of students who attempted the exam
-        //finding the total number of students wo attempted the exam
-        return ExamReturn.find({exam: this.exam}).count((error, totalStudentWhoAttemptedExam) => {
-
-            //handling any potential errors
-            if (error) return Promise.reject(error);
-            if (totalStudentWhoAttemptedExam <= 0) return Promise.reject('No students who have attempted exam, rejecting request');
-
-            //calculating percentages based keys here
-            this.percentageOfStudentWhoAttempted = questionAnswers.length * 100 / totalStudentWhoAttemptedExam;
-            
-            //last two value requires the average times taken by students who got this question right
-            //mapping queestions answers to find the Answer which are correct and array of time taken
-            var correctAnswerTimes = [];
-            questionAnswers.map((questionAnswer) => {
-                if (questionAnswer.isAnswerCorrect) return correctAnswerTimes.push(questionAnswer.timeTaken);
-            });
-
-            //correctanswerTimes.length number of students who attempted this question and got right
-
-            this.percentageOfStudentWhoAttemptedGotThisQuestionRight = correctAnswerTimes.length * 100 / questionAnswers.length;
-
-            // if some student has done this question right, finding the aerage tme for the right answer
-            if (correctAnswerTimes.length) {
-                this.avreageTimeTakenByStudentsWhoGotThisQuestionRight = _.reduce( correctAnswerTimes, (total, n) => total+n ) / questionAnswers.length;
-
-                // if no students has done the answer correctly, setting the value to 0
-            } else {
-                this.avreageTimeTakenByStudentsWhoGotThisQuestionRight = 0;
-            }
-
-            //saving the document, returning the promise
-            return this.save();
-        });
-
-        //handling any potential errors
-    }, (error) => Promise.reject(error));
-
+    
     //method finishes here
 };
 

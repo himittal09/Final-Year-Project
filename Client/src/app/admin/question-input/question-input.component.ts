@@ -89,6 +89,7 @@ export class QuestionInputComponent implements OnInit {
     this.subscription = this.adminService.putQuestionIntoExam(this.questionItemForm.value, this.id).subscribe((response: Response) => {
       this.isSubmissionFailed = 0;
       this.lastSubmittedQuestionId = response.json()._id;
+      this.questionItemForm.reset({'body': ''})
     }, (error: any) => {
       if (error.status === 401) {
         this.isSubmissionFailed = 1;

@@ -55,7 +55,7 @@ AggregateExamQuestionAnalysisSchema.methods.calculateComparableQuestionDataByDoc
         QuestionAnswer.find({exam: this.exam, question: this.question}).select('isAnswerCorrect marksObtained timeTaken -_id').then((questionAnswers) => {
             
             // if no answers has been submitted for this question, rejecting the request for anaysis of the question
-            if (questionAnswers.length === 0) return reject('No Question Arnswers length, rejecting request');
+            if (questionAnswers.length === 0) return reject('No Question Answers length, rejecting request');
     
             //calculating values for these two keys
             this.cutOff = pluckAndReduce(questionAnswers, 'marksObtained');

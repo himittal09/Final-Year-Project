@@ -1,20 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import { Response } from '@angular/http';
 
 import { UserService } from './user/user.service';
 import { IsAuthenticatedService } from './Shared/is-authenticated.service';
+import { AdminService } from './admin/admin.service';
 
 @Component({
   selector: 'fyp-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  constructor (private userService: UserService, private isAuthenticatedService: IsAuthenticatedService) {}
+  constructor (
+    private userService: UserService,
+    private isAuthenticatedService: IsAuthenticatedService,
+    private adminService: AdminService
+  ) {}
 
   ngOnInit () {
     this.subscription = this.userService.getAuthStatus().subscribe((response: Response) => {
@@ -33,4 +38,17 @@ export class AppComponent implements OnInit {
       this.subscription.unsubscribe();
     });
   }
+
+  ngOnDestroy () {
+    if (!this.isAuthenticatedService.ifAuthenticated()) {
+      return this.isAuthenticatedService.clearStorage();
+    }
+    if (this.isAuthenticatedService.isAdminAuthenticated()) {
+      this.subscription = this.adminService.logoutAdmin().subscribe((response: Response) => {}, (error: any) => {}, () => this.subscription.unsubscribe());
+    } else {
+      this.subscription = this.userService.logoutuser().subscribe((response: Response) => {}, (error: any) => {}, () => this.subscription.unsubscribe());
+    }
+    this.isAuthenticatedService.clearStorage();
+  }
+
 }

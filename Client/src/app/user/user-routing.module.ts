@@ -4,13 +4,17 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { UserMeComponent } from './user-me/user-me.component';
 import { UserSignupComponent } from './user-signup/user-signup.component';
 
-import { CanActivateUnprotectedComponentGuard } from '../Guards/can-activate-unprotected-component.guard';
-import { CanActivateUserComponentGuard } from '../Guards/can-activate-user-component.guard';
+import {
+    CanActivateUnprotectedComponentGuard,
+    CanActivateUserComponentGuard,
+    CanAccessUserComponentGuard
+} from '../Guards';
 
 export const USER_ROUTES: Routes = [
     {
         path: '',
-        component: UserMeComponent
+        component: UserMeComponent,
+        canActivate: [ CanAccessUserComponentGuard ]
     },
     {
         path: 'signup',

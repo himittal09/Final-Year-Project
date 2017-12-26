@@ -7,13 +7,17 @@ import { ExamInputComponent } from './exam-input/exam-input.component';
 import { QuestionInputComponent } from './question-input/question-input.component';
 import { ViewExamComponent } from './view-exam/view-exam.component';
 
-import { CanActivateAdminComponentGuard } from '../Guards/can-activate-admin-component.guard';
-import { CanActivateUnprotectedComponentGuard } from '../Guards/can-activate-unprotected-component.guard';
+import {
+  CanActivateAdminComponentGuard,
+  CanActivateUnprotectedComponentGuard,
+  CanAccessAdminComponentGuard
+} from '../Guards';
 
 export const ADMIN_ROUTES: Routes = [
   {
     path: '',
-    component: AdminMeComponent
+    component: AdminMeComponent,
+    canActivate: [ CanAccessAdminComponentGuard ]
   },
   {
     path: 'login',

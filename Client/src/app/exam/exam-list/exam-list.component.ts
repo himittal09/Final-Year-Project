@@ -18,6 +18,7 @@ export class ExamListComponent implements OnInit {
   subscription: Subscription;
   isexamFetchingFailure = -1;
   examReturns: string[];
+  selectedExam: Exam;
 
   constructor(
     private examService: ExamService,
@@ -49,12 +50,16 @@ export class ExamListComponent implements OnInit {
     });
   }
 
-  redirecttoExam(examId: string): void {
+  redirecttoExam(): void {
 
     const elem = document.documentElement; // Make the body go full screen.
     this.requestFullScreen(elem);
 
-    this.router.navigate(['exam', examId]);
+    this.router.navigate(['exam', this.selectedExam._id]);
+  }
+
+  selectExam (examId: string): void {
+    this.selectedExam = this.examList.find(exam => exam._id === examId);
   }
 
   redirectToResult(examId: string): void {

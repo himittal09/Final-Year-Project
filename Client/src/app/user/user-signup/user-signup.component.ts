@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormArray, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
@@ -50,8 +50,8 @@ export class UserSignupComponent implements OnInit {
       ]),
       'email': new FormControl('', [
         Validators.required,
-        Validators.email,
-        Validators.maxLength(50)
+        Validators.maxLength(50),
+        this.emailValidator
       ], [
         this.emailUniqueValidator.bind(this)
       ]),
@@ -109,10 +109,11 @@ export class UserSignupComponent implements OnInit {
   }
 
   phoneNumberValidator (control: FormControl): {[s: string]: boolean} {
-    if (!validator.isMobilePhone((<string>control.value), 'en-IN')) {
-      return {phoneNumberValidator: true};
-    }
-    return null;
+    return validator.isMobilePhone((<string>control.value), 'en-IN') ? null : {phoneNumberValidator: true};
+  }
+
+  emailValidator (control: FormControl): {[s: string]: boolean} {
+    return validator.isEmail(control.value) ? null : {emailValidator: true};
   }
 
   emailUniqueValidator (control: AbstractControl): Promise<{[key: string]: any}> | Observable<{[key: string]: any}> {

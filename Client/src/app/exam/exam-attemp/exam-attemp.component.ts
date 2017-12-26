@@ -18,7 +18,7 @@ export class ExamAttempComponent implements OnInit {
   timeNow = 0;
   timeNowInMinutes: number;
   lastSprintTime = 0;
-  timer: Observable<any> = Observable.timer(0, 990);
+  timer = Observable.timer(0, 990);
   timerSubscription: Subscription;
   subscription: Subscription;
   id: string;
@@ -32,7 +32,11 @@ export class ExamAttempComponent implements OnInit {
     exam: ''
   };
 
-  constructor(private examService: ExamService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor (
+    private examService: ExamService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {
     this.id = this.activatedRoute.snapshot.params['id'];
   }
 
@@ -84,7 +88,7 @@ export class ExamAttempComponent implements OnInit {
         'questionAnswers': new FormArray([])
       });
 
-      (<Question[]>this.exam.questions).forEach((question, index) => {
+      this.exam.questions.forEach((question, index) => {
         (<FormArray>this.examForm.controls.questionAnswers).push(new FormControl());
       });
 

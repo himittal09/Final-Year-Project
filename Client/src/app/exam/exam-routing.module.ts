@@ -6,8 +6,11 @@ import { ExamQuickResultComponent } from './exam-quick-result/exam-quick-result.
 import { ExamResultComponent } from './exam-result/exam-result.component';
 import { ExamListComponent } from './exam-list/exam-list.component';
 
-import { CanDeactivateComponent } from '../Guards/can-leave-exam.guard';
-import { CanActivateUserComponentGuard } from '../Guards/can-activate-user-component.guard';
+import {
+  CanDeactivateComponent,
+  CanActivateUserComponentGuard,
+  CanAccessUserComponentGuard
+} from '../Guards';
 
 export const EXAM_ROUTES: Routes = [
   {
@@ -28,6 +31,7 @@ export const EXAM_ROUTES: Routes = [
   },
   {
     path: '',
-    component: ExamListComponent
+    component: ExamListComponent,
+    canActivate: [ CanAccessUserComponentGuard ]
   },
 ];

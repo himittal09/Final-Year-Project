@@ -29,7 +29,7 @@ const { QuestionAnswer } = require('../models/questionAnswer');
 router.get('/exam', authenticate, (request, response) => {
 
     //finding all exams descending date order wise
-    Exam.find({}).select('name description allowedTime subject createdAt _id').sort('-date').exec((error, exams) => {
+    Exam.find({}).select('name description allowedTime subject createdAt _id').sort('date').exec((error, exams) => {
 
         //if error occurs, sending back error with Internal Server error status code
         if (error) return response.status(500).send(error);

@@ -8,6 +8,8 @@ import { Subscription } from 'rxjs/Rx';
 import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
 import { UserService } from '../user.service';
 
+const validator = require('validator');
+
 @Component({
   selector: 'fyp-user-login',
   templateUrl: './user-login.component.html',
@@ -29,8 +31,8 @@ export class UserLoginComponent implements OnInit {
     this.userLoginForm = new FormGroup({
       'email': new FormControl('', [
         Validators.required,
-        Validators.email,
-        Validators.maxLength(50)
+        Validators.maxLength(50),
+        this.emailValidator
       ]),
       'password': new FormControl('', [
         Validators.minLength(8),
@@ -75,6 +77,10 @@ export class UserLoginComponent implements OnInit {
       return null;
     }
     return {containsNoSpaceValidator: true};
+  }
+
+  emailValidator (control: FormControl): {[s: string]: boolean} {
+    return validator.isEmail(control.value) ? null : {emailValidator: true};
   }
 
 }

@@ -37,13 +37,17 @@ import { ExamQuickResultComponent } from './exam/exam-quick-result/exam-quick-re
 import { ExamResultComponent } from './exam/exam-result/exam-result.component';
 import { ExamListComponent } from './exam/exam-list/exam-list.component';
 
-import { CanDeactivateComponent } from './Guards/can-leave-exam.guard';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 
-import { CanActivateAdminComponentGuard } from './Guards/can-activate-admin-component.guard';
-import { CanActivateUnprotectedComponentGuard } from './Guards/can-activate-unprotected-component.guard';
-import { CanActivateUserComponentGuard } from './Guards/can-activate-user-component.guard';
+import {
+  CanActivateAdminComponentGuard,
+  CanActivateUnprotectedComponentGuard,
+  CanActivateUserComponentGuard,
+  CanDeactivateComponent,
+  CanAccessUserComponentGuard,
+  CanAccessAdminComponentGuard
+} from './Guards';
 
 declare let require: any;
 
@@ -88,7 +92,9 @@ declare let require: any;
     CanDeactivateComponent,
     CanActivateAdminComponentGuard,
     CanActivateUnprotectedComponentGuard,
-    CanActivateUserComponentGuard
+    CanActivateUserComponentGuard,
+    CanAccessUserComponentGuard,
+    CanAccessAdminComponentGuard
   ],
   bootstrap: [AppComponent]
 })

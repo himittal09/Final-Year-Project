@@ -13,6 +13,7 @@
                 <button type="button"
                         class="btn btn-primary"
                         [disabled]="exam.hasUserAttempted"
+                        (click)="selectExam(exam._id)"
                         data-toggle="modal"
                         data-target="#myModal">View Exam
                 </button>
@@ -34,22 +35,22 @@
                       <div class="modal-body">
                         <dl class="row">
                           <dt class="col-sm-3 col-sm-offset-1">Exam Name</dt>
-                          <dd class="col-sm-8">{{exam.name}}</dd>
+                          <dd class="col-sm-8">{{selectedExam?.name}}</dd>
                         
                           <dt class="col-sm-3 col-sm-offset-1">Description</dt>
-                          <dd class="col-sm-8">{{exam.description}}</dd>
+                          <dd class="col-sm-8">{{selectedExam?.description}}</dd>
         
                           <dt class="col-sm-3 col-sm-offset-1">Allowed Time</dt>
-                          <dd class="col-sm-8">{{exam.allowedTime}} (in Minutes)</dd>
+                          <dd class="col-sm-8">{{selectedExam?.allowedTime}} (in Minutes)</dd>
         
                           <dt class="col-sm-3 col-sm-offset-1">Subject</dt>
-                          <dd class="col-sm-8">{{exam.subject}}</dd>
+                          <dd class="col-sm-8">{{selectedExam?.subject}}</dd>
                         
                           <dt class="col-sm-3 col-sm-offset-1">Exam ID</dt>
-                          <dd class="col-sm-8">{{exam._id}}</dd>
+                          <dd class="col-sm-8">{{selectedExam?._id}}</dd>
         
                           <dt class="col-sm-3 col-sm-offset-1">Created At</dt>
-                          <dd class="col-sm-8">{{exam.createdAt}}</dd>
+                          <dd class="col-sm-8">{{selectedExam?.createdAt}}</dd>
                         </dl>
                       </div>
                       
@@ -61,7 +62,7 @@
                         <button type="button"
                                 class="btn btn-primary"
                                 data-dismiss="modal"
-                                (click)="redirecttoExam(exam._id)">Continue to Exam
+                                (click)="redirecttoExam()">Continue to Exam
                         </button>
                       </div>
                     

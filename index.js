@@ -37,9 +37,9 @@ app.use( session ({
 }));
 
 //using external routes
-app.use(require('./Routes/userRoutes'));
-app.use(require('./Routes/adminRoutes'));
-app.use(require('./Routes/examRoutes'));
+app.use('/api', require('./Routes/userRoutes'));
+app.use('/api', require('./Routes/adminRoutes'));
+app.use('/api', require('./Routes/examRoutes'));
 
 //serving the home page
 app.get('/', (request, response) => {
@@ -52,4 +52,4 @@ app.listen(process.env.PORT, () => {
 });
 
 //exporting app for testing purpose
-module.exports = {app};
+module.exports = app;

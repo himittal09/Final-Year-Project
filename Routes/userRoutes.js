@@ -1,16 +1,15 @@
 //importing required packages installed by npm
 const _ = require('lodash');
-var express = require('express');
+const express = require('express');
 
 //making router from express to make this route available to main index.js file
-var router = express.Router();
+const router = express.Router();
 
 //importing middleware from middleware directory to authenticate students
 const {userAuthenticate} = require('../middleware/userAuthenticate');
 
 //importing models from models directory
 const {Student} = require('../models/student');
-
 
 /****************************************
  *Route to signup a new student (user)

@@ -3,10 +3,10 @@ require('./config/config');
 
 //importing required packages installed by npm
 const express = require('express');
-const path = require('path');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const session = require('express-session');
+const compression = require('compression');
+const morgan = require('morgan');
 //passing the session as required by MongoStore
 const MongoStore = require('connect-mongo')(session);
 
@@ -20,10 +20,15 @@ const {mongoose} = require('./db/mongoose');
 const app = express();
 
 //usin application middlewares
-app.use(cors({
-	origin: 'http://localhost:4200',
-	credentials: true
-}));
+app.use(compression());
+app.use(morgan('combined'));
+app.use(function (req, res, next) {
+	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+	res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, PUT, OPTIONS');
+    next();
+});
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/Client/dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -52,4 +57,4 @@ app.listen(process.env.PORT, () => {
 });
 
 //exporting app for testing purpose
-module.exports = {app};
+module.exports = app;

@@ -1,20 +1,20 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
   <title>Exam Analysis System</title>
   <base href="/">
+
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#FFFFFF"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="manifest" href="assets/Json/manifest.webmanifest">
 
   <link rel="icon" type="image/x-icon" href="assets/Images/webpage_logo_Dqb_icon.ico">
 
   <link rel="stylesheet" type="text/css" href="assets/StyleSheets/bootstrap.min.css">
 
   <link rel="stylesheet" type="text/css" href="assets/StyleSheets/font-awesome.min.css">
-  
-  <!-- <link rel="stylesheet" type="text/css" href="assets/StyleSheets/cerulean.min.css"> -->
-
-  <!-- <link rel="stylesheet" type="text/css" href="assets/StyleSheets/cosmo.min.css"> -->
 
   <link rel="stylesheet" type="text/css" href="assets/StyleSheets/paper.min.css">
 
@@ -26,32 +26,7 @@
   
   <script src="assets/Javascript/bootstrap.min.js"></script>
 
-  <script>
-    $(document).ready(function(){
-      // Add smooth scrolling to all links
-      $("a").on('click', function(event) {
-    
-        // Make sure this.hash has a value before overriding default behavior
-        if (this.hash !== "") {
-          // Prevent default anchor click behavior
-          event.preventDefault();
-    
-          // Store hash
-          var hash = this.hash;
-    
-          // Using jQuery's animate() method to add smooth page scroll
-          // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-          $('html, body').animate({
-            scrollTop: $(hash).offset().top
-          }, 800, function(){
-        
-            // Add hash (#) to URL when done scrolling (default click behavior)
-            window.location.hash = hash;
-          });
-        } // End if
-      });
-    });
-  </script>
+  <script>$(document).ready(function(){$("a").on('click',function(e){if(this.hash!==""){e.preventDefault();$('html, body').animate({scrollTop:$(this.hash).offset().top},800,function(){window.location.hash=this.hash;});}});});</script>
 
 </body>
 </html>

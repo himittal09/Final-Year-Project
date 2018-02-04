@@ -143,5 +143,4 @@ StudentSchema.pre('save', function (next) {
     //method ends here
 });
 
-const Student = mongoose.model('Student', StudentSchema);
-module.exports = {Student};
+module.exports = mongoose.model('Student', StudentSchema);

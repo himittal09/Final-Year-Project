@@ -68,5 +68,4 @@ ExamSchema.methods.addQuestionRef = function (id) {
     //method ends here
 };
 
-const Exam = mongoose.model('Exam', ExamSchema);
-module.exports = {Exam};
+module.exports = mongoose.model('Exam', ExamSchema);

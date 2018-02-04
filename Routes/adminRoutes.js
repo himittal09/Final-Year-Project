@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 
 //requiring mngoose and pulling out ObjectId from it for validations
-const ObjectId = require('mongoose').Types.ObjectId;
+const {ObjectId} = require('mongoose').Types;
 
 //importing middleware from middleware directory to authenticate admin
 const { adminAuthenticate } = require('../middleware/adminAuthenticate');
@@ -15,10 +15,12 @@ const { adminAuthenticate } = require('../middleware/adminAuthenticate');
 const admin = require('../config/admin');
 
 //importing models from models directory
-const { AggregateExamQuestionAnalysis } = require('../models/aggregateExamQuestionAnalysis');
-const { AggregateExamResult } = require('../models/aggregateExamResult');
-const { Exam } = require('../models/exam');
-const { MCQuestion } = require('../models/mcqQuestion');
+const {
+    AggregateExamQuestionAnalysis,
+    AggregateExamResult,
+    Exam,
+    MCQuestion
+} = require('../models');
 
 /*************************************************
  * Route to Login the Admin into the system

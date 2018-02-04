@@ -1,5 +1,5 @@
 //importing required packages installed by npm
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 //for deprecated mongoose Promise
 mongoose.Promise = global.Promise;
@@ -9,7 +9,7 @@ mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true}).then(() => {
     //success case
     console.log('Successfully connected to database: ' + process.env.DB);
     //error case
-}, (error) => console.log(error.message));
+}, (error) => console.error(error));
 
 //exporting mongoose with the connection
-module.exports = {mongoose};
+module.exports = mongoose;

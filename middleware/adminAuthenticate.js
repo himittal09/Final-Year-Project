@@ -1,6 +1,6 @@
 //creating a authenticate function to be used as a reference, for private route
 //will check if the admin is authenticated, will be executed before the actual route
-var adminAuthenticate = (request, response, next) => {
+const adminAuthenticate = (request, response, next) => {
 
     // if the admin is not authenticated, send empty response with Unauthorised status code
     if (!request.session.isAuthenticated) return response.status(401).send();

@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 //importing other models to be used in methods
-const {MCQuestion} = require('./mcqQuestion');
+const MCQuestion = require('./mcqQuestion');
 
 const QuestionAnswerSchema = new mongoose.Schema({
 
@@ -61,5 +61,4 @@ QuestionAnswerSchema.pre('save', function (next) {
     //method finishes here
 });
 
-const QuestionAnswer = mongoose.model('QuestionAnswer', QuestionAnswerSchema);
-module.exports = {QuestionAnswer};
+module.exports = mongoose.model('QuestionAnswer', QuestionAnswerSchema);

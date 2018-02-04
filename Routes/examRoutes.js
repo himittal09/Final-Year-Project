@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 
 //requiring mngoose and pulling out ObjectId from it for validations
-const ObjectId = require('mongoose').Types.ObjectId;
+const { ObjectId } = require('mongoose').Types;
 
 //importing middleware from middleware directory to authenticate students
 const { authenticate } = require('../middleware/authenticate');
@@ -14,12 +14,13 @@ const { mergeArrays } = require('../middleware/methods');
 const { userAuthenticate } = require('../middleware/userAuthenticate');
 
 //importing models from models directory
-const { AggregateExamQuestionAnalysis } = require('../models/aggregateExamQuestionAnalysis');
-const { AggregateExamResult } = require('../models/aggregateExamResult');
-const { Exam } = require('../models/exam');
-const { ExamReturn } = require('../models/examReturn');
-const { QuestionAnswer } = require('../models/questionAnswer');
-
+const {
+    AggregateExamQuestionAnalysis,
+    AggregateExamResult,
+    Exam,
+    ExamReturn,
+    QuestionAnswer
+} = require('../models');
 
 /*******************************************************
  * This route is used when user wishes to get a list of all exams

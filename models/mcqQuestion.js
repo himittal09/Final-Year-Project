@@ -54,5 +54,4 @@ const MultipleChoiceQuestionSchema = new mongoose.Schema({
     //schema definition finishes here
 });
 
-const MCQuestion = mongoose.model('MCQuestion', MultipleChoiceQuestionSchema);
-module.exports = {MCQuestion};
+module.exports = mongoose.model('MCQuestion', MultipleChoiceQuestionSchema);

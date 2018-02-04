@@ -9,8 +9,7 @@ var router = express.Router();
 const {userAuthenticate} = require('../middleware/userAuthenticate');
 
 //importing models from models directory
-const {Student} = require('../models/student');
-
+const {Student} = require('../models');
 
 /****************************************
  *Route to signup a new student (user)

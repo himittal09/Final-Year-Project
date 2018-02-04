@@ -4,7 +4,7 @@
   "description": "This is Project for Final Year",
   "main": "index.js",
   "scripts": {
-    "test": "SET \"NODE_ENV=test\" && mocha server/**/*.test.js",
+    "test": "SET \"NODE_ENV=test\" && mocha **/*.test.js",
     "testWatch": "nodemon --exec \"npm test\"",
     "start": "node index.js"
   },
@@ -16,6 +16,7 @@
   "license": "MIT",
   "devDependencies": {
     "expect": "^21.0.2",
+    "faker": "^4.1.0",
     "mocha": "^3.5.0",
     "nodemon": "^1.12.0",
     "supertest": "^3.0.0"

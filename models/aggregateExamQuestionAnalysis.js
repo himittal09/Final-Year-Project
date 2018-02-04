@@ -5,8 +5,8 @@ const _ = require('lodash');
 //for depricated Promise of mongoose
 mongoose.Promise = global.Promise;
 
-const { QuestionAnswer } = require('./questionAnswer');
-const { ExamReturn } = require('./examReturn');
+const QuestionAnswer = require('./questionAnswer');
+const ExamReturn = require('./examReturn');
 
 const {pluckAndReduce} = require('../middleware/methods');
 
@@ -110,8 +110,7 @@ AggregateExamQuestionAnalysisSchema.methods.calculateComparableQuestionDataByDoc
     //method finishes here
 };
 
-const AggregateExamQuestionAnalysis = mongoose.model('AggregateExamQuestionAnalysis', AggregateExamQuestionAnalysisSchema);
-module.exports = {AggregateExamQuestionAnalysis};
+module.exports = mongoose.model('AggregateExamQuestionAnalysis', AggregateExamQuestionAnalysisSchema);
 
 // avreageTimeTakenByStudentsWhoGotThisQuestionRight: Number =  sumOfTimeOfAllUsersWhoGotThisQuestionRightForThisQuestion / countOfAllUsersWhoAttemptedThisQuestion
 //questionReturnForExamWhoGotThisQuestionRight

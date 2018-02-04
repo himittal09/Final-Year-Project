@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 //importing other models to be used in methods
-const {ExamReturn} = require('./examReturn');
+const ExamReturn = require('./examReturn');
 const {pluckAndReduce} = require('../middleware/methods');
 
 const AggregateExamResultSchema = new mongoose.Schema({
@@ -88,5 +88,4 @@ AggregateExamResultSchema.methods.calculateComparableDataByDocument = function (
     //method finishes here
 };
 
-const AggregateExamResult = mongoose.model('AggregateExamResult', AggregateExamResultSchema);
-module.exports = {AggregateExamResult};
+module.exports = mongoose.model('AggregateExamResult', AggregateExamResultSchema);

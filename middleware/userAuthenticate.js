@@ -1,9 +1,9 @@
 //importing student model from models folder
-const {Student} = require('../models/student');
+const {Student} = require('../models');
 
 //creating a authenticate function to be used as a reference, for private route
 //will check if the user is authenticated, will be executed before the actual route
-var userAuthenticate = (request, response, next) => {
+const userAuthenticate = (request, response, next) => {
 
     // if the user is not authenticated, send empty response with Unauthorised status code
     if (!request.session.isAuthenticated) return response.status(401).send();

@@ -10,16 +10,13 @@ const morgan = require('morgan');
 //passing the session as required by MongoStore
 const MongoStore = require('connect-mongo')(session);
 
-//creating router to use external routes
-const router = express.Router();
-
 //importing the mongoose with connection
-const {mongoose} = require('./db/mongoose');
+const mongoose = require('./db/mongoose');
 
 //creating an app by express
 const app = express();
 
-//usin application middlewares
+//using application middlewares
 app.use(compression());
 app.use(morgan('combined'));
 app.use(function (req, res, next) {

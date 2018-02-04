@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 //importing other models from model directory to be used in methods
-const {Exam} = require('./exam');
+const Exam = require('./exam');
 
 const ExamReturnSchema = new mongoose.Schema({
 
@@ -79,5 +79,4 @@ ExamReturnSchema.pre('save', function (next) {
     //method ends here
 });
 
-const ExamReturn = mongoose.model('ExamReturn', ExamReturnSchema);
-module.exports = {ExamReturn};
+module.exports = mongoose.model('ExamReturn', ExamReturnSchema);

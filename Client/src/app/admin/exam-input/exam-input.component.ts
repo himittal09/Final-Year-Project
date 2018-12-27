@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { AdminService } from '../admin.service';
-import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
-import { Question } from '../../Classes';
 
 @Component({
   selector: 'fyp-exam-input',
@@ -21,8 +19,7 @@ export class ExamInputComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private router: Router,
-    private isAuthenticatedService: IsAuthenticatedService
+    private router: Router
   ) { }
 
   ngOnInit() {

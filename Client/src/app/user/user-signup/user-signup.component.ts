@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable, Subscription } from 'rxjs';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
+import { debounceTime, map } from 'rxjs/operators';
 
-import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
-import { User } from '../../Classes';
+import { SharedService } from '@app/shared/shared.service';
 import { UserService } from '../user.service';
 
-const validator = require('validator');
+import validator from 'validator';
 
 @Component({
   selector: 'fyp-user-signup',
@@ -24,7 +24,7 @@ export class UserSignupComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private isAuthenticatedService: IsAuthenticatedService
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {
@@ -51,7 +51,7 @@ export class UserSignupComponent implements OnInit {
       'email': new FormControl('', [
         Validators.required,
         Validators.maxLength(50),
-        this.emailValidator
+        Validators.email
       ], [
         this.emailUniqueValidator.bind(this)
       ]),
@@ -83,18 +83,17 @@ export class UserSignupComponent implements OnInit {
     this.subscription = this.userService.registerUser(this.loginForm.value).subscribe((response: Response) => {
       this.isRegistrationFailure = 0;
       this.loginForm.reset({'phoneNumber': ''});
-      this.isAuthenticatedService.authenticateUser();
+      this.sharedService.authenticate(1);
       setTimeout(() => {
         this.router.navigate(['/exam']);
       }, 3000);
     }, (error: any) => {
-      console.error(error);
       if (error.status === 405) {
-        if (this.isAuthenticatedService.isUserAuthenticated()) {
+        if (this.sharedService.isUserAuthenticated) {
           this.isRegistrationFailure = 0;
           return this.router.navigate(['/exam']);
         }
-        this.isAuthenticatedService.authenticateUser();
+        this.sharedService.authenticate(1);
         this.isRegistrationFailure = 2;
         // already logged in
         setTimeout(() => {
@@ -103,6 +102,7 @@ export class UserSignupComponent implements OnInit {
       } else {
         this.isRegistrationFailure = 1; // 503
       }
+      throw error;
     }, () => {
       this.subscription.unsubscribe();
     });
@@ -112,16 +112,18 @@ export class UserSignupComponent implements OnInit {
     return validator.isMobilePhone((<string>control.value), 'en-IN') ? null : {phoneNumberValidator: true};
   }
 
-  emailValidator (control: FormControl): {[s: string]: boolean} {
-    return validator.isEmail(control.value) ? null : {emailValidator: true};
-  }
-
   emailUniqueValidator (control: AbstractControl): Promise<{[key: string]: any}> | Observable<{[key: string]: any}> {
-    return new Promise((resolve, reject) => {
-      this.userService.checkEmailUnique(control.value).subscribe((response: Response) => {
-        response.json().found ? resolve({emailUniqueValidator: true}) : resolve(null);
-      }, (error: any) => resolve({emailUniqueValidator: true}));
-    });
+
+    return this.userService.checkEmailUnique(control.value).pipe(
+      debounceTime(500),
+      map(value => value.found ? {emailUniqueValidator: true} : null)
+    );
+
+    // return new Promise((resolve, reject) => {
+    //   this.userService.checkEmailUnique(control.value).subscribe((response: Response) => {
+    //     response.json().found ? resolve({emailUniqueValidator: true}) : resolve(null);
+    //   }, (error: any) => resolve({emailUniqueValidator: true}));
+    // });
   }
 
   matchingPasswords (password: string, confirm: string): any {

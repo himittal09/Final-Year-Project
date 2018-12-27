@@ -1,35 +1,35 @@
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
-import { User } from '../Classes';
+import { UserModule } from './user.module';
 
-@Injectable()
+import { User } from '@class/user';
+
+@Injectable({
+  providedIn: 'root'
+})
 export class UserService {
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
-  checkEmailUnique (email: string): Observable<Response> {
+  checkEmailUnique (email: string): Observable<any> {
     return this.http.post('http://localhost:3000/user/email', {email}, { withCredentials: true });
   }
 
-  registerUser (user: User): Observable<Response> {
+  registerUser (user: User): Observable<any> {
     return this.http.post('http://localhost:3000/user/signup', user, { withCredentials: true });
   }
 
-  loginUser (body: any): Observable<Response> {
+  loginUser (body: any): Observable<any> {
     return this.http.post('http://localhost:3000/user/login', body, { withCredentials: true });
   }
 
-  logoutuser (): Observable<Response> {
-    return this.http.delete('http://localhost:3000/user/logout', { withCredentials: true });
-  }
-
-  getUser (): Observable<Response> {
+  getUser (): Observable<any> {
     return this.http.get('http://localhost:3000/user/me', { withCredentials: true });
   }
 
-  getAuthStatus (): Observable<Response> {
+  getAuthStatus (): Observable<any> {
     return this.http.get('http://localhost:3000/authstatus', { withCredentials: true });
   }
 

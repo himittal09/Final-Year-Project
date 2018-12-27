@@ -2,10 +2,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Response } from '@angular/http';
-import { Subscription, Observable } from 'rxjs/Rx';
+import { Subscription, Observable } from 'rxjs';
 
 import { AdminService } from '../admin.service';
-import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
 
 @Component({
   selector: 'fyp-question-input',
@@ -22,8 +21,7 @@ export class QuestionInputComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private activatedRoute: ActivatedRoute,
-    private isAuthenticatedService: IsAuthenticatedService
+    private activatedRoute: ActivatedRoute
   ) {
     this.id = this.activatedRoute.snapshot.params['id'];
   }
@@ -89,7 +87,7 @@ export class QuestionInputComponent implements OnInit {
     this.subscription = this.adminService.putQuestionIntoExam(this.questionItemForm.value, this.id).subscribe((response: Response) => {
       this.isSubmissionFailed = 0;
       this.lastSubmittedQuestionId = response.json()._id;
-      this.questionItemForm.reset({'body': ''})
+      this.questionItemForm.reset({'body': ''});
     }, (error: any) => {
       if (error.status === 401) {
         this.isSubmissionFailed = 1;

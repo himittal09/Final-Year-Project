@@ -1,9 +1,9 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
-import { ExamReturn } from '../../Classes';
+import { ExamReturn } from '@class/index';
 import { ExamService } from '../exam.service';
 
 @Component({

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
-import { Exam } from '../../Classes';
-import { ExamService } from '../../exam/exam.service';
-import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
+import { Exam } from '@class/index';
+import { ExamService } from '@app/exam/exam.service';
 
 @Component({
   selector: 'fyp-view-exam',
@@ -19,9 +17,7 @@ export class ViewExamComponent implements OnInit {
   isexamFetchingFailure = -1;
 
   constructor(
-    private examService: ExamService,
-    private router: Router,
-    private isAuthenticatedService: IsAuthenticatedService
+    private examService: ExamService
   ) { }
 
   ngOnInit() {
@@ -29,7 +25,6 @@ export class ViewExamComponent implements OnInit {
       this.examList = response.json();
       this.isexamFetchingFailure = 0;
     }, (error: any) => {
-      console.error(error);
       if (error.status === 401) {
         this.isexamFetchingFailure = 1;
         // 401 unauthorised
@@ -40,6 +35,7 @@ export class ViewExamComponent implements OnInit {
         this.isexamFetchingFailure = 3;
         // 404 no exam found
       }
+      throw error;
     }, () => {
       this.subscription.unsubscribe();
     });

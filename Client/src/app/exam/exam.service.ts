@@ -1,30 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-@Injectable()
+import { ExamModule } from '@app/exam/exam.module';
+
+@Injectable({
+  providedIn: 'root'
+})
 export class ExamService {
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
-  getExamList (): Observable<Response> {
+  getExamList (): Observable<any> {
     return this.http.get('http://localhost:3000/exam', { withCredentials: true });
   }
 
-  getExam (id: string): Observable<Response> {
+  getExam (id: string): Observable<any> {
     return this.http.get('http://localhost:3000/exam/' + id, { withCredentials: true });
   }
 
-  submitExam (id: string, exam: any): Observable<Response> {
+  submitExam (id: string, exam: any): Observable<any> {
     return this.http.post('http://localhost:3000/exam/submit/' + id, exam, { withCredentials: true });
   }
 
-  getExamQuickResult (id: string): Observable<Response> {
+  getExamQuickResult (id: string): Observable<any> {
     return this.http.get('http://localhost:3000/exam/quick/' + id, { withCredentials: true });
   }
 
   getExamResult (id: string): Observable<any> {
-    return this.http.get('http://localhost:3000/exam/result/' + id, { withCredentials: true }).map(res => res.json());
+    return this.http.get('http://localhost:3000/exam/result/' + id, { withCredentials: true });
   }
 
 }

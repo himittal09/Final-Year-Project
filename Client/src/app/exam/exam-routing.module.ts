@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 
-import { ExamComponent } from './exam.component';
 import { ExamAttempComponent } from './exam-attemp/exam-attemp.component';
 import { ExamQuickResultComponent } from './exam-quick-result/exam-quick-result.component';
 import { ExamResultComponent } from './exam-result/exam-result.component';
@@ -10,7 +9,7 @@ import {
   CanDeactivateComponent,
   CanActivateUserComponentGuard,
   CanAccessUserComponentGuard
-} from '../Guards';
+} from '@app/shared/guard/index';
 
 export const EXAM_ROUTES: Routes = [
   {
@@ -31,7 +30,6 @@ export const EXAM_ROUTES: Routes = [
   },
   {
     path: '',
-    component: ExamListComponent,
-    canActivate: [ CanAccessUserComponentGuard ]
+    component: ExamListComponent
   },
 ];

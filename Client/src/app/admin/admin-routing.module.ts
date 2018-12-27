@@ -11,13 +11,12 @@ import {
   CanActivateAdminComponentGuard,
   CanActivateUnprotectedComponentGuard,
   CanAccessAdminComponentGuard
-} from '../Guards';
+} from '@app/shared/guard/index';
 
 export const ADMIN_ROUTES: Routes = [
   {
     path: '',
-    component: AdminMeComponent,
-    canActivate: [ CanAccessAdminComponentGuard ]
+    component: AdminMeComponent
   },
   {
     path: 'login',

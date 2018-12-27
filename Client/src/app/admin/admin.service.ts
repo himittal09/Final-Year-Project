@@ -1,39 +1,38 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-import { Exam, Question } from '../Classes';
+import { Exam, Question } from '@class/index';
+import { AdminModule } from '@app/admin/admin.module';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AdminService {
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
-  loginAdmin (password: string): Observable<Response> {
+  loginAdmin (password: string): Observable<any> {
     return this.http.post('http://localhost:3000/admin/login', {password}, { withCredentials: true });
   }
 
-  checkAdminAuthenticated (): Observable<Response> {
+  checkAdminAuthenticated (): Observable<any> {
     return this.http.get('http://localhost:3000/admin/me', { withCredentials: true });
   }
 
-  logoutAdmin (): Observable<Response> {
-    return this.http.delete('http://localhost:3000/admin/logout', { withCredentials: true });
-  }
-
-  createExam (exam: Exam): Observable<Response> {
+  createExam (exam: Exam): Observable<any> {
     return this.http.post('http://localhost:3000/admin/createExam', exam, { withCredentials: true });
   }
 
-  putQuestionIntoExam (question: Question, id: string): Observable<Response> {
+  putQuestionIntoExam (question: Question, id: string): Observable<any> {
     return this.http.post('http://localhost:3000/admin/exam/' + id + '/insertque', question, { withCredentials: true });
   }
 
-  checkExam (id: string): Observable<Response> {
+  checkExam (id: string): Observable<any> {
     return this.http.get('http://localhost:3000/admin/exam/' + id, { withCredentials: true });
   }
 
-  checkQuestionUnique (questionBody: string): Observable<Response> {
+  checkQuestionUnique (questionBody: string): Observable<any> {
     return this.http.post('http://localhost:3000/admin/question', {questionBody}, { withCredentials: true });
   }
 

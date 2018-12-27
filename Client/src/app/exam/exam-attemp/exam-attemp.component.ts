@@ -1,10 +1,10 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormGroup, FormControl } from '@angular/forms';
 import { Response } from '@angular/http';
-import { Subscription, Observable } from 'rxjs/Rx';
+import { Subscription, Observable, timer } from 'rxjs';
 
-import { Exam, Question } from '../../Classes';
+import { Exam } from '@class/index';
 import { ExamService } from '../exam.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class ExamAttempComponent implements OnInit {
   timeNow = 0;
   timeNowInMinutes: number;
   lastSprintTime = 0;
-  timer = Observable.timer(0, 990);
+  timer = timer(0, 990);
   timerSubscription: Subscription;
   subscription: Subscription;
   id: string;
@@ -49,7 +49,8 @@ export class ExamAttempComponent implements OnInit {
 
     // if answer has already been submitted once
     if (this.examData.questionAnswers.find((element) => element.question === questionId)) {
-      return console.error('Answer for this question has already been submitted, not submitting this attemp');
+      throw new Error('Answer for this question has already been submitted, not submitting this attemp');
+      return;
     }
 
     // creating value to push in final data
@@ -113,11 +114,11 @@ export class ExamAttempComponent implements OnInit {
       });
 
     }, (error: any) => {
-      console.error(error);
       window.alert('Error Occured while fetching exam: ' + error.message);
       setTimeout(() => this.router.navigate(['../']), 1500);
       this.examLoadSuccess = 0;
       // setting flag to mark the fetching failure
+      throw error;
     }, () => {
       this.subscription.unsubscribe();
     });
@@ -136,7 +137,6 @@ export class ExamAttempComponent implements OnInit {
       // on successfull submission of exam, redirecting to exam quick result
       this.router.navigate(['exam', 'submit', this.id]);
     }, (error: any) => {
-      console.error(error);
       if (error.status === 401) {
         // 401 unauthenticated
       } else if (error.status === 501) {
@@ -146,6 +146,7 @@ export class ExamAttempComponent implements OnInit {
       } else {
         // 500 internal server error
       }
+      throw error;
     }, () => {
       this.subscription.unsubscribe();
     });

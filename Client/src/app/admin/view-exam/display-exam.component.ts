@@ -1,11 +1,10 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { AdminService } from '../admin.service';
-import { Exam, Question } from '../../Classes';
-import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
+import { Exam, Question } from '@class/index';
 
 @Component({
   selector: 'fyp-display-exam',
@@ -23,8 +22,7 @@ export class DisplayExamComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private activatedRoute: ActivatedRoute,
-    private isAuthenticatedService: IsAuthenticatedService
+    private activatedRoute: ActivatedRoute
   ) {
     this.id = this.activatedRoute.snapshot.params['id'];
   }

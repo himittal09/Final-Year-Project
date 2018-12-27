@@ -6,15 +6,15 @@ import { UserSignupComponent } from './user-signup/user-signup.component';
 
 import {
     CanActivateUnprotectedComponentGuard,
-    CanActivateUserComponentGuard,
     CanAccessUserComponentGuard
-} from '../Guards';
+} from '@guard/index';
 
 export const USER_ROUTES: Routes = [
     {
         path: '',
         component: UserMeComponent,
-        canActivate: [ CanAccessUserComponentGuard ]
+        canActivate: [ CanAccessUserComponentGuard ],
+        resolve: []
     },
     {
         path: 'signup',

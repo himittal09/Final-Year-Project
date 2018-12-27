@@ -1,100 +1,44 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { UserService } from './user/user.service';
-import { AdminService } from './admin/admin.service';
-import { ExamService } from './exam/exam.service';
+import { environment } from '@env/environment';
+import { GlobalErrorHandler } from '@app/shared/error-handling/error-handler';
+import { ServerErrorsInterceptor } from '@app/shared/error-handling/http-interceptor';
 
-import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
-import { NavbarComponent } from './navbar/navbar.component';
-
-import { ExamInputComponent } from './admin/exam-input/exam-input.component';
-import { QuestionInputComponent } from './admin/question-input/question-input.component';
-import { AdminComponent } from './admin/admin.component';
-import { ViewExamComponent } from './admin/view-exam/view-exam.component';
-import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
-import { AdminMeComponent } from './admin/admin-me/admin-me.component';
-import { DisplayExamComponent } from './admin/view-exam/display-exam.component';
+import { SharedModule } from './shared/shared.module';
+import { UserModule } from './user/user.module';
 
 import { UserComponent } from './user/user.component';
-import { UserSignupComponent } from './user/user-signup/user-signup.component';
-
-import { RouteNotFoundComponent } from './route-not-found/route-not-found.component';
-import { ExamComponent } from './exam/exam.component';
-import { UserLoginComponent } from './user/user-login/user-login.component';
-
-import { IsAuthenticatedService } from './Shared/is-authenticated.service';
-import { UserMeComponent } from './user/user-me/user-me.component';
-
-import { ExamAttempComponent } from './exam/exam-attemp/exam-attemp.component';
-import { ExamQuickResultComponent } from './exam/exam-quick-result/exam-quick-result.component';
-import { ExamResultComponent } from './exam/exam-result/exam-result.component';
-import { ExamListComponent } from './exam/exam-list/exam-list.component';
-
-import { AboutComponent } from './about/about.component';
-import { HomeComponent } from './home/home.component';
-
-import {
-  CanActivateAdminComponentGuard,
-  CanActivateUnprotectedComponentGuard,
-  CanActivateUserComponentGuard,
-  CanDeactivateComponent,
-  CanAccessUserComponentGuard,
-  CanAccessAdminComponentGuard
-} from './Guards';
-
-declare let require: any;
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    RouteNotFoundComponent,
-    UserSignupComponent,
-    ExamInputComponent,
-    QuestionInputComponent,
-    ExamComponent,
-    UserComponent,
-    AdminComponent,
-    ViewExamComponent,
-    UserLoginComponent,
-    AdminLoginComponent,
-    UserMeComponent,
-    AdminMeComponent,
-    DisplayExamComponent,
-    ExamAttempComponent,
-    ExamQuickResultComponent,
-    ExamResultComponent,
-    ExamListComponent,
-    AboutComponent,
-    HomeComponent
+    UserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HttpModule,
+    SharedModule,
+    UserModule,
     BrowserAnimationsModule,
-    NgxChartsModule
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
-    UserService,
-    AdminService,
-    IsAuthenticatedService,
-    ExamService,
-    CanDeactivateComponent,
-    CanActivateAdminComponentGuard,
-    CanActivateUnprotectedComponentGuard,
-    CanActivateUserComponentGuard,
-    CanAccessUserComponentGuard,
-    CanAccessAdminComponentGuard
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ServerErrorsInterceptor,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })

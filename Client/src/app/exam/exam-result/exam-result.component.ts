@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 import { ExamService } from '../exam.service';
 
 import {
-  User,
   Exam,
   Question,
   ExamReturn,
@@ -18,7 +16,7 @@ import {
   ColorScheme,
   GraphDataSet,
   NumberCardDataSet
-} from '../../Classes';
+} from '@class/index';
 
 @Component({
   selector: 'fyp-exam-result',
@@ -113,7 +111,7 @@ export class ExamResultComponent implements OnInit {
       // 35 * 10 question  = 350, 350 + 50 for x axis = 400 total height
 
     }, (error: any) => {
-      console.error(error);
+      throw error;
     }, () => this.subscription.unsubscribe());
   }
 

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { AdminService } from '../admin.service';
-import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
-import { setTimeout } from 'timers';
+import { SharedService } from '@app/shared/shared.service';
 
 @Component({
   selector: 'fyp-admin-me',
@@ -18,12 +17,12 @@ export class AdminMeComponent implements OnInit {
   subscription: Subscription;
   constructor(
     private adminService: AdminService,
-    private isAuthenticatedService: IsAuthenticatedService,
+    private sharedService: SharedService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    const adminAuthenticated = this.isAuthenticatedService.isAdminAuthenticated();
+    const adminAuthenticated = this.sharedService.isAdminAuthenticated;
     this.subscription = this.adminService.checkAdminAuthenticated().subscribe((response: Response) => {
       if (adminAuthenticated) {
         this.syncStatus = 0;
@@ -49,10 +48,10 @@ export class AdminMeComponent implements OnInit {
   syncWithServer (): void {
     if (this.syncStatus === 1) {
       this.syncStatus = 0;
-      this.isAuthenticatedService.authenticateAdmin();
+      this.sharedService.authenticate(0);
     } else if (this.syncStatus === 2) {
       this.syncStatus = 0;
-      this.isAuthenticatedService.unAuthenticate();
+      this.sharedService.authenticate(-1);
     }
   }
 

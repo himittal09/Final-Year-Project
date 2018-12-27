@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
-import { setTimeout } from 'timers';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
-import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
-import { User } from '../../Classes/user';
+import { SharedService } from '@app/shared/shared.service';
+import { User } from '@class/user';
 import { UserService } from '../user.service';
 
 @Component({
@@ -22,11 +21,11 @@ export class UserMeComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private isAuthenticatedService: IsAuthenticatedService
+    private sharedService: SharedService
   ) { }
 
   ngOnInit() {
-    const userauthenticated = this.isAuthenticatedService.isUserAuthenticated();
+    const userauthenticated = this.sharedService.isUserAuthenticated;
     this.subscription = this.userService.getUser().subscribe((response: Response) => {
       this.user = response.json();
       if (userauthenticated) {
@@ -63,10 +62,10 @@ export class UserMeComponent implements OnInit {
   syncWithServer (): void {
     if (this.syncStatus === 1) {
       this.syncStatus = 0;
-      this.isAuthenticatedService.authenticateUser();
+      this.sharedService.authenticate(1);
     } else if (this.syncStatus === 2) {
       this.syncStatus = 0;
-      this.isAuthenticatedService.unAuthenticate();
+      this.sharedService.authenticate(-1);
     }
   }
 

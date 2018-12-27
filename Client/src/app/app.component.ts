@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 import { Response } from '@angular/http';
 
 import { UserService } from './user/user.service';
-import { IsAuthenticatedService } from './Shared/is-authenticated.service';
-import { AdminService } from './admin/admin.service';
+import { SharedService } from '@app/shared/shared.service';
 
 @Component({
   selector: 'fyp-root',
@@ -17,38 +16,38 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor (
     private userService: UserService,
-    private isAuthenticatedService: IsAuthenticatedService,
-    private adminService: AdminService
+    private sharedService: SharedService
   ) {}
 
   ngOnInit () {
     this.subscription = this.userService.getAuthStatus().subscribe((response: Response) => {
       const authStatus = response.json().authStatus;
       if (authStatus === 2) {
-        this.isAuthenticatedService.unAuthenticate();
+        this.sharedService.authenticate(-1);
       } else if (authStatus === 0) {
-        this.isAuthenticatedService.authenticateAdmin();
+        this.sharedService.authenticate(1);
       } else {
-        this.isAuthenticatedService.authenticateUser();
+        this.sharedService.authenticate(0);
       }
     }, (error: any) => {
-      console.error(error);
-      this.isAuthenticatedService.unAuthenticate();
+      this.sharedService.authenticate(-1);
+      throw error;
     }, () => {
       this.subscription.unsubscribe();
     });
   }
 
   ngOnDestroy () {
-    if (!this.isAuthenticatedService.ifAuthenticated()) {
-      return this.isAuthenticatedService.clearStorage();
+    if (!this.sharedService.isAuthenticatedSync) {
+      return this.sharedService.resetToDefaults();
     }
-    if (this.isAuthenticatedService.isAdminAuthenticated()) {
-      this.subscription = this.adminService.logoutAdmin().subscribe((response: Response) => {}, (error: any) => {}, () => this.subscription.unsubscribe());
+    if (this.sharedService.isAdminAuthenticated) {
+      this.subscription = this.sharedService.logoutAdmin().subscribe((response: Response) => {});
     } else {
-      this.subscription = this.userService.logoutuser().subscribe((response: Response) => {}, (error: any) => {}, () => this.subscription.unsubscribe());
+      this.subscription = this.sharedService.logoutuser().subscribe((response: Response) => {});
     }
-    this.isAuthenticatedService.clearStorage();
+    this.sharedService.resetToDefaults();
+    this.subscription.unsubscribe();
   }
 
 }

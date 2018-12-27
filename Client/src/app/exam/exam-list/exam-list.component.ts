@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
-import { Exam } from '../../Classes';
+import { Exam } from '@class/index';
 import { ExamService } from '../exam.service';
-import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
+import { SharedService } from '@app/shared/shared.service';
 
 @Component({
   selector: 'fyp-exam-list',
@@ -23,10 +23,14 @@ export class ExamListComponent implements OnInit {
   constructor(
     private examService: ExamService,
     private router: Router,
-    private isAuthenticatedService: IsAuthenticatedService
+    private sharedService: SharedService
   ) { }
 
   ngOnInit() {
+    if (!this.sharedService.isUserAuthenticated) {
+      this.isexamFetchingFailure = 1;
+      return;
+    }
     this.subscription = this.examService.getExamList().subscribe((response: Response) => {
       this.examList = response.json().exams;
       this.examReturns = response.json().examReturns;

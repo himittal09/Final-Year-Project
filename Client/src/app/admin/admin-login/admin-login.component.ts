@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
-import { setTimeout } from 'timers';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { AdminService } from '../admin.service';
-import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
+import { SharedService } from '@app/shared/shared.service';
 
 @Component({
   selector: 'fyp-admin-login',
@@ -22,7 +21,7 @@ export class AdminLoginComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private router: Router,
-    private isAuthenticatedService: IsAuthenticatedService
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {
@@ -36,12 +35,11 @@ export class AdminLoginComponent implements OnInit {
 
   onSubmit (): void {
     this.subscription = this.adminService.loginAdmin(this.adminLoginForm.controls['password'].value).subscribe((response: Response) => {
-      this.isAuthenticatedService.authenticateAdmin();
+      this.sharedService.authenticate(1);
       this.router.navigate(['/admin']);
     }, (error: any) => {
-      console.error(error);
       if (error.status === 405) {
-        if (this.isAuthenticatedService.isAdminAuthenticated()) {
+        if (this.sharedService.isAdminAuthenticated) {
           return this.router.navigate(['/admin']);
         }
         this.isLoginFailure = 2;
@@ -54,6 +52,7 @@ export class AdminLoginComponent implements OnInit {
         // 400 unauthorised access
       }
       this.adminLoginForm.reset();
+      throw error;
     }, () => {
       this.subscription.unsubscribe();
     });

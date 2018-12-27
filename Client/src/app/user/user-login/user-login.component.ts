@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
-import { setTimeout } from 'timers';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
-import { IsAuthenticatedService } from '../../Shared/is-authenticated.service';
+import { SharedService } from '@app/shared/shared.service';
 import { UserService } from '../user.service';
 
-const validator = require('validator');
+import validator from 'validator';
 
 @Component({
   selector: 'fyp-user-login',
@@ -24,7 +23,7 @@ export class UserLoginComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private isAuthenticatedService: IsAuthenticatedService
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {
@@ -45,17 +44,17 @@ export class UserLoginComponent implements OnInit {
 
   onSubmit (): void {
     this.subscription = this.userService.loginUser(this.userLoginForm.value).subscribe((response: Response) => {
-      this.isAuthenticatedService.authenticateUser();
+      this.sharedService.authenticate(1);
       this.router.navigate(['/exam']);
     }, (error: any) => {
-      console.error(error);
+      throw error;
       if ( error.status === 405 ) {
-        if (this.isAuthenticatedService.isUserAuthenticated()) {
+        if (this.sharedService.isUserAuthenticated) {
           return this.router.navigate(['/exam']);
         }
         this.isLoginFailure = 2;
         // some one alreay logged in
-        this.isAuthenticatedService.authenticateUser();
+        this.sharedService.authenticate(1);
         setTimeout(() => {
           this.router.navigate(['/user']);
         }, 3000);
@@ -63,9 +62,7 @@ export class UserLoginComponent implements OnInit {
         // 400
         this.isLoginFailure = 1;
       }
-    }, () => {
-      this.subscription.unsubscribe();
-    });
+    }, () => this.subscription.unsubscribe());
   }
 
   containsNoSpaceValidator (control: FormControl): {[s: string]: boolean} {

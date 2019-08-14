@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -23,7 +23,7 @@ export class AdminMeComponent implements OnInit {
 
   ngOnInit() {
     const adminAuthenticated = this.sharedService.isAdminAuthenticated;
-    this.subscription = this.adminService.checkAdminAuthenticated().subscribe((response: Response) => {
+    this.subscription = this.adminService.checkAdminAuthenticated().subscribe(() => {
       if (adminAuthenticated) {
         this.syncStatus = 0;
         // all good, both synced

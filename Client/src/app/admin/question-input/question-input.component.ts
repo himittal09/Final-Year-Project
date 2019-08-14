@@ -1,10 +1,12 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription, Observable } from 'rxjs';
 
+import { Question } from '@class/index';
 import { AdminService } from '../admin.service';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
   selector: 'fyp-question-input',
@@ -84,9 +86,9 @@ export class QuestionInputComponent implements OnInit {
   }
 
   onSubmit() {
-    this.subscription = this.adminService.putQuestionIntoExam(this.questionItemForm.value, this.id).subscribe((response: Response) => {
+    this.subscription = this.adminService.putQuestionIntoExam(this.questionItemForm.value, this.id).subscribe((response: HttpResponse<Question>) => {
       this.isSubmissionFailed = 0;
-      this.lastSubmittedQuestionId = response.json()._id;
+      this.lastSubmittedQuestionId = response.body._id;
       this.questionItemForm.reset({'body': ''});
     }, (error: any) => {
       if (error.status === 401) {
@@ -112,12 +114,12 @@ export class QuestionInputComponent implements OnInit {
     this.isSubmissionFailed = -1;
   }
 
-  questionUniqueValidator (control: AbstractControl): Promise<{[key: string]: any}> | Observable<{[key: string]: any}> {
-    return new Promise((resolve, reject) => {
-      this.adminService.checkQuestionUnique(control.value).subscribe((response: Response) => {
-        response.json().found ? resolve({questionUniqueValidator: true}) : resolve(null);
-      }, (error: any) => resolve({questionUniqueValidator: true}));
-    });
+  questionUniqueValidator (control: AbstractControl): Promise<{[key: string]: boolean}> | Observable<{[key: string]: boolean}> {
+    return this.adminService.checkQuestionUnique(control.value).pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      map(value => value.found ? {questionUniqueValidator: true} : null)
+    );
   }
 
   containsNoSpaceValidator (control: FormControl): {[s: string]: boolean} {

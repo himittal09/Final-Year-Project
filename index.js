@@ -1,17 +1,17 @@
 //importing configurations files
-require('./config/config');
+import './config/config';
 
 //importing required packages installed by npm
-const express = require('express');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const compression = require('compression');
-const morgan = require('morgan');
+import express, { static } from 'express';
+import { json, urlencoded } from 'body-parser';
+import session from 'express-session';
+import compression from 'compression';
+import morgan from 'morgan';
 //passing the session as required by MongoStore
 const MongoStore = require('connect-mongo')(session);
 
 //importing the mongoose with connection
-const mongoose = require('./db/mongoose');
+import { connection } from './db/mongoose';
 
 //creating an app by express
 const app = express();
@@ -26,16 +26,16 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, PUT, OPTIONS');
     next();
 });
-app.use(bodyParser.json());
-app.use(express.static(__dirname + '/Client/dist'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(json());
+app.use(static(__dirname + '/Client/dist'));
+app.use(urlencoded({ extended: false }));
 app.use( session ({
 	name: 'connect.sid',
 	httponly: true,
 	secret : process.env.SESSION_KEY,
 	resave: false,
 	saveUninitialized: true,
-	store: new MongoStore({ mongooseConnection: mongoose.connection })
+	store: new MongoStore({ mongooseConnection: connection })
 }));
 
 //using external routes
@@ -54,4 +54,4 @@ app.listen(process.env.PORT, () => {
 });
 
 //exporting app for testing purpose
-module.exports = app;
+export default app;

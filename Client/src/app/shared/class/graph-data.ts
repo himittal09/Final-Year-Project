@@ -1,9 +1,9 @@
-interface SeriesData {
+class SeriesData {
     name: number | string;
     value: number | string;
     min?: number | string;
     max?: number | string;
-}
+};
 
 class ColorScheme {
     constructor (

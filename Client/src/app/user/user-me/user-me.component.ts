@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -26,8 +26,8 @@ export class UserMeComponent implements OnInit {
 
   ngOnInit() {
     const userauthenticated = this.sharedService.isUserAuthenticated;
-    this.subscription = this.userService.getUser().subscribe((response: Response) => {
-      this.user = response.json();
+    this.subscription = this.userService.getUser().subscribe((response: HttpResponse<User>) => {
+      this.user = response.body;
       if (userauthenticated) {
         this.syncStatus = 0;
         // all good

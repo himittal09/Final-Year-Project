@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup, FormControl } from '@angular/forms';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription, Observable, timer } from 'rxjs';
 
 import { Exam } from '@class/index';
@@ -18,7 +18,7 @@ export class ExamAttempComponent implements OnInit {
   timeNow = 0;
   timeNowInMinutes: number;
   lastSprintTime = 0;
-  timer = timer(0, 990);
+  timer = timer(0, 1000);
   timerSubscription: Subscription;
   subscription: Subscription;
   id: string;
@@ -50,7 +50,6 @@ export class ExamAttempComponent implements OnInit {
     // if answer has already been submitted once
     if (this.examData.questionAnswers.find((element) => element.question === questionId)) {
       throw new Error('Answer for this question has already been submitted, not submitting this attemp');
-      return;
     }
 
     // creating value to push in final data
@@ -77,9 +76,9 @@ export class ExamAttempComponent implements OnInit {
   ngOnInit() {
 
     // getting exam from backend
-    this.subscription = this.examService.getExam(this.id).subscribe((response: Response) => {
+    this.subscription = this.examService.getExam(this.id).subscribe((response: HttpResponse<Exam>) => {
 
-      this.exam = response.json();
+      this.exam = response.body;
 
       // converting time limit from minutes to seconds
       this.examTimeLimit = this.exam.allowedTime * 60;
@@ -133,7 +132,7 @@ export class ExamAttempComponent implements OnInit {
     this.examData.exam = this.exam._id;
 
     // sending response data back to server
-    this.subscription = this.examService.submitExam(this.id, this.examData).subscribe((response: Response) => {
+    this.subscription = this.examService.submitExam(this.id, this.examData).subscribe((response: Observable<null>) => {
       // on successfull submission of exam, redirecting to exam quick result
       this.router.navigate(['exam', 'submit', this.id]);
     }, (error: any) => {

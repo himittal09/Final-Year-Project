@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 
 import { UserService } from './user/user.service';
 import { SharedService } from '@app/shared/shared.service';
@@ -20,8 +20,8 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit () {
-    this.subscription = this.userService.getAuthStatus().subscribe((response: Response) => {
-      const authStatus = response.json().authStatus;
+    this.subscription = this.userService.getAuthStatus().subscribe((response: HttpResponse<any>) => {
+      const authStatus = response.body.authStatus;
       if (authStatus === 2) {
         this.sharedService.authenticate(-1);
       } else if (authStatus === 0) {
@@ -42,9 +42,9 @@ export class AppComponent implements OnInit, OnDestroy {
       return this.sharedService.resetToDefaults();
     }
     if (this.sharedService.isAdminAuthenticated) {
-      this.subscription = this.sharedService.logoutAdmin().subscribe((response: Response) => {});
+      this.subscription = this.sharedService.logoutAdmin().subscribe((response: HttpResponse<any>) => {});
     } else {
-      this.subscription = this.sharedService.logoutuser().subscribe((response: Response) => {});
+      this.subscription = this.sharedService.logoutuser().subscribe((response: HttpResponse<any>) => {});
     }
     this.sharedService.resetToDefaults();
     this.subscription.unsubscribe();

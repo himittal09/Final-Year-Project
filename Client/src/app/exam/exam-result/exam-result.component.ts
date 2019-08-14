@@ -17,6 +17,7 @@ import {
   GraphDataSet,
   NumberCardDataSet
 } from '@class/index';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'fyp-exam-result',
@@ -50,25 +51,25 @@ export class ExamResultComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscription = this.examService.getExamResult(this.id).subscribe((response: any) => {
+    this.subscription = this.examService.getExamResult(this.id).subscribe((response: HttpResponse<any>) => {
 
-      this.questions = response.questions;
-      delete response.questions;
+      this.questions = response.body.questions;
+      // delete response.questions;
 
-      this.questionAnswers = response.questionResult;
-      delete response.questionResult;
+      this.questionAnswers = response.body.questionResult;
+      // delete response.questionResult;
 
-      this.examReturn = response.examResult;
-      delete response.examResult;
+      this.examReturn = response.body.examResult;
+      // delete response.examResult;
 
-      this.exam = response.exam;
-      delete response.exam;
+      this.exam = response.body.exam;
+      // delete response.exam;
 
-      this.examAnalysis =  response.examAnalysis;
-      delete response.examAnalysis;
+      this.examAnalysis =  response.body.examAnalysis;
+      // delete response.examAnalysis;
 
-      this.aggregateExamQuestionAnalysis = response.aggregateExamQuestionAnalysis;
-      delete response.aggregateExamQuestionAnalysis;
+      this.aggregateExamQuestionAnalysis = response.body.aggregateExamQuestionAnalysis;
+      // delete response.aggregateExamQuestionAnalysis;
       //
 
       this.selectQuestionForDisplay(this.questions[0]._id, 1);

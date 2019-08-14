@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { debounceTime, map, distinctUntilChanged } from 'rxjs/operators';
 
 import { SharedService } from '@app/shared/shared.service';
 import { UserService } from '../user.service';
 
-import validator from 'validator';
+import * as isMobilePhone from 'validator/lib/isMobilePhone';
+import { User } from '@class/index';
 
 @Component({
   selector: 'fyp-user-signup',
@@ -80,7 +81,7 @@ export class UserSignupComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.subscription = this.userService.registerUser(this.loginForm.value).subscribe((response: Response) => {
+    this.subscription = this.userService.registerUser(this.loginForm.value).subscribe((response: HttpResponse<User>) => {
       this.isRegistrationFailure = 0;
       this.loginForm.reset({'phoneNumber': ''});
       this.sharedService.authenticate(1);
@@ -109,7 +110,7 @@ export class UserSignupComponent implements OnInit {
   }
 
   phoneNumberValidator (control: FormControl): {[s: string]: boolean} {
-    return validator.isMobilePhone((<string>control.value), 'en-IN') ? null : {phoneNumberValidator: true};
+    return isMobilePhone((<string>control.value), 'en-IN') ? null : {phoneNumberValidator: true};
   }
 
   emailUniqueValidator (control: AbstractControl): Promise<{[key: string]: any}> | Observable<{[key: string]: any}> {
@@ -117,7 +118,7 @@ export class UserSignupComponent implements OnInit {
     return this.userService.checkEmailUnique(control.value).pipe(
       debounceTime(500),
       distinctUntilChanged(),
-      map(value => value.found ? {emailUniqueValidator: true} : null)
+      map(value => value.body.found ? {emailUniqueValidator: true} : null)
     );
 
   }

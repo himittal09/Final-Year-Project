@@ -54,12 +54,12 @@ export class SharedService {
     // this.userSource.next(user);
   }
 
-  logoutuser (): Observable<any> {
-    return this.http.delete(`${environment.backendUrl}/user/logout`, { withCredentials: true });
+  logoutuser (): Observable<null> {
+    return this.http.delete<null>(`${environment.backendUrl}/user/logout`, { withCredentials: true });
   }
 
-  logoutAdmin (): Observable<any> {
-    return this.http.delete(`${environment.backendUrl}/admin/logout`, { withCredentials: true });
+  logoutAdmin (): Observable<null> {
+    return this.http.delete<null>(`${environment.backendUrl}/admin/logout`, { withCredentials: true });
   }
 
 }

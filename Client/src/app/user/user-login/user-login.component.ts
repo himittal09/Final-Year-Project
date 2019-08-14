@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { SharedService } from '@app/shared/shared.service';
 import { UserService } from '../user.service';
 
-import validator from 'validator';
+import * as isEmail from 'validator/lib/isEmail';
+
+import { User } from '@class/index';
 
 @Component({
   selector: 'fyp-user-login',
@@ -43,7 +45,7 @@ export class UserLoginComponent implements OnInit {
   }
 
   onSubmit (): void {
-    this.subscription = this.userService.loginUser(this.userLoginForm.value).subscribe((response: Response) => {
+    this.subscription = this.userService.loginUser(this.userLoginForm.value).subscribe((response: HttpResponse<User>) => {
       this.sharedService.authenticate(1);
       this.router.navigate(['/exam']);
     }, (error: any) => {
@@ -77,7 +79,7 @@ export class UserLoginComponent implements OnInit {
   }
 
   emailValidator (control: FormControl): {[s: string]: boolean} {
-    return validator.isEmail(control.value) ? null : {emailValidator: true};
+    return isEmail(control.value) ? null : {emailValidator: true};
   }
 
 }

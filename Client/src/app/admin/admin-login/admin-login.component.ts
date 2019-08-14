@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Response } from '@angular/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -34,7 +34,7 @@ export class AdminLoginComponent implements OnInit {
   }
 
   onSubmit (): void {
-    this.subscription = this.adminService.loginAdmin(this.adminLoginForm.controls['password'].value).subscribe((response: Response) => {
+    this.subscription = this.adminService.loginAdmin(this.adminLoginForm.controls['password'].value).subscribe((response: HttpResponse<null>) => {
       this.sharedService.authenticate(1);
       this.router.navigate(['/admin']);
     }, (error: any) => {
@@ -53,9 +53,7 @@ export class AdminLoginComponent implements OnInit {
       }
       this.adminLoginForm.reset();
       throw error;
-    }, () => {
-      this.subscription.unsubscribe();
-    });
+    }, () => this.subscription.unsubscribe());
   }
 
   containsNoSpaceValidator (control: FormControl): {[s: string]: boolean} {

@@ -1,6 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
 import { AdminService } from '../admin.service';
@@ -28,9 +28,9 @@ export class DisplayExamComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscription = this.adminService.checkExam(this.id).subscribe((response: Response) => {
+    this.subscription = this.adminService.checkExam(this.id).subscribe((response: HttpResponse<Exam>) => {
       this.submissionError = 0;
-      this.exam = response.json();
+      this.exam = response.body;
       if (this.exam.questions.length) {
         this.question = this.exam.questions[0];
         this.selectedQuestionNumber = 1;

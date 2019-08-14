@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -31,9 +31,9 @@ export class ExamListComponent implements OnInit {
       this.isexamFetchingFailure = 1;
       return;
     }
-    this.subscription = this.examService.getExamList().subscribe((response: Response) => {
-      this.examList = response.json().exams;
-      this.examReturns = response.json().examReturns;
+    this.subscription = this.examService.getExamList().subscribe((response: HttpResponse<any>) => {
+      this.examList = response.body.exams;
+      this.examReturns = response.body.examReturns;
       this.isexamFetchingFailure = 0;
       this.examList.forEach((exam) => {
         exam.hasUserAttempted = this.examReturns.includes(exam._id);

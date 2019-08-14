@@ -178,7 +178,7 @@ router.post('/exam/submit/:id', userAuthenticate, (request, response) => {
         return examReturn.save().then(() => {
 
             //responsing back as exam successfully stored in database
-            response.send('Exam Successfully submitted in Store');
+            response.send();
 
             //Handing any potential errors, sending error to client with the Internal Server error status code
         }, (error) => response.status(500).send(error));
@@ -214,7 +214,7 @@ router.post('/exam/submit/:id', userAuthenticate, (request, response) => {
         examReturn.save().then(() => {
 
             //responsing back as exam successfully stored in database
-            response.send('Exam Successfully submitted in Store');
+            response.send();
 
             //Handing any potential errors, sending error to client with the Internal Server error status code
         }, (error) => response.status(500).send(error));

@@ -1,6 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
 import { ExamReturn } from '@class/index';
@@ -23,8 +23,8 @@ export class ExamQuickResultComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscription = this.examService.getExamQuickResult(this.id).subscribe((response: Response) => {
-      this.examReturn = response.json();
+    this.subscription = this.examService.getExamQuickResult(this.id).subscribe((response: HttpResponse<ExamReturn>) => {
+      this.examReturn = response.body;
       this.errorStatus = 0;
     }, (error: any) => {
       if (error.status === 401) {

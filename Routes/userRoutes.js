@@ -20,7 +20,7 @@ router.post('/user/signup', (request, response) => {
     //checking if someone is already logged in (student/admin)
     if (request.session.isAuthenticated)
         // if logged in, sending Method no allowed status code with message
-        return response.status(405).send(`SomeOne Already logged in.`);
+        return response.status(405).send();
     
     //picking all necessary values here, leaving other extra if any sent from client, by lodash's pick method
     var body = _.pick(request.body, ['firstName', 'lastName', 'middleName', 'phoneNumber', 'email', 'address', 'studentClass', 'password']);
@@ -54,7 +54,7 @@ router.post('/user/login', (request, response) => {
     //checking if someone is already logged in (student/admin)
     if (request.session.isAuthenticated)
         // if logged in, sending Method no allowed status code with message
-        return response.status(405).send(`SomeOne Already logged in.`);
+        return response.status(405).send();
 
     //picking all necessary values here, leaving other extra if any sent from client, by lodash's pick method
     body = _.pick(request.body, ['email', 'password']);
@@ -89,7 +89,7 @@ router.delete('/user/logout', userAuthenticate, (request, response) => {
         if (error) return response.status(500).send(error);
         
         //on successful deletion of session, response with OK status code is sent
-        response.send('User Logged out');
+        response.send();
     });
 
     //route completes here

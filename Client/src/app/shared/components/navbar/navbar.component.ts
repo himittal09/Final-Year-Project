@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logoutUser () {
-    this.subscription = this.sharedService.logoutuser().subscribe((response: Response) => {
+    this.subscription = this.sharedService.logoutuser().subscribe((response: HttpResponse<any>) => {
       this.sharedService.authenticate(-1);
       this.router.navigate(['/user/login']);
     }, (error: any) => {
@@ -44,7 +44,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logoutAdmin () {
-    this.subscription = this.sharedService.logoutAdmin().subscribe((response: Response) => {
+    this.subscription = this.sharedService.logoutAdmin().subscribe((response: HttpResponse<any>) => {
       this.sharedService.authenticate(-1);
       this.router.navigate(['/admin', 'login']);
     }, (error: any) => {

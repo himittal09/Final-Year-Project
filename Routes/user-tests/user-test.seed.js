@@ -25,7 +25,7 @@ const populateUsers = (done) => {
             userPromises.push(new Student(users[i]).save());
         }
         return Promise.all(userPromises);
-    }).then(() => done());
+    }).then(() => done()).catch((error) => done(error));
 };
 
 module.exports = {users, populateUsers};

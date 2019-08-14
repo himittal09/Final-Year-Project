@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+
+import { Exam } from '@class/index';
 
 import { AdminService } from '../admin.service';
 
@@ -50,9 +52,9 @@ export class ExamInputComponent implements OnInit {
   }
 
   onSubmit () {
-    this.subscription = this.adminService.createExam(this.examForm.value).subscribe((response: Response) => {
+    this.subscription = this.adminService.createExam(this.examForm.value).subscribe((response: HttpResponse<Exam>) => {
       this.submissionError = 0;
-      this.router.navigate(['admin', 'exam', response.json()._id, 'insertque']);
+      this.router.navigate(['admin', 'exam', response.body._id, 'insertque']);
     }, (error: any) => {
       if (error.status === 401) {
         this.submissionError = 1;

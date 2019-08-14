@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
 import { Exam } from '@class/index';
@@ -21,8 +21,8 @@ export class ViewExamComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.subscription = this.examService.getExamList().subscribe((response: Response) => {
-      this.examList = response.json();
+    this.subscription = this.examService.getExamList().subscribe((response: HttpResponse<Exam[]>) => {
+      this.examList = response.body;
       this.isexamFetchingFailure = 0;
     }, (error: any) => {
       if (error.status === 401) {

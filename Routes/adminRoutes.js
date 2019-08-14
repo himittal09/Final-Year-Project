@@ -56,7 +56,7 @@ router.post('/admin/login', (request, response) => {
 router.get('/admin/me', adminAuthenticate, (request, response) => {
     
     //sending message to confirm that access is permitted
-    response.send('You have access to admin panel');
+    response.send();
 
     //route completes here
 });
@@ -74,7 +74,7 @@ router.delete('/admin/logout', adminAuthenticate, (request, response) => {
         if (error) return response.status(500).send(error);
 
         //on successful deletion of session, response with OK status code is sent
-        response.send('Logout Successful');
+        response.send();
     });
     //route completes here
 });

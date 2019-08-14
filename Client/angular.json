@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/exam-analysis-system",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -41,6 +41,11 @@
                 "glob": "**/*",
                 "input": "./assets/Json/",
                 "output": "./assets/Json/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./assets/Server/",
+                "output": "./Server/"
               }
             ],
             "styles": [
@@ -118,6 +123,14 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/my-project-server",
+            "main": "src/main.server.ts",
+            "tsConfig": "src/tsconfig.server.json"
           }
         }
       }

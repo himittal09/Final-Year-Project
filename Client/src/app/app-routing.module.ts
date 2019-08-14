@@ -19,7 +19,6 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: '**', component: RouteNotFoundComponent }
 ];
-// component: AdminComponent, children: ADMIN_ROUTES
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

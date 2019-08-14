@@ -26,16 +26,16 @@ export class SharedService {
   }
 
   get isUserAuthenticated (): boolean {
-    return this.userLevelSource.getValue() === 1 ? true : false;
+    return this.userLevelSource.getValue() === 1;
   }
 
   get isAdminAuthenticated (): boolean {
-    return this.userLevelSource.getValue() === 0 ? true : false;
+    return this.userLevelSource.getValue() === 0;
   }
 
   authenticate (userLevel: number) {
     this.userLevelSource.next(userLevel);
-    this.userAuthenticationSource.next(userLevel < 0 ? false : true);
+    this.userAuthenticationSource.next(userLevel >= 0);
   }
 
   get isAuthenticatedSync () {
@@ -50,7 +50,7 @@ export class SharedService {
 
   set initDefaults (userLevel: number) {
     this.userLevelSource.next(userLevel);
-    this.userAuthenticationSource.next(userLevel < 0 ? false : true);
+    this.userAuthenticationSource.next(userLevel >= 0);
     // this.userSource.next(user);
   }
 

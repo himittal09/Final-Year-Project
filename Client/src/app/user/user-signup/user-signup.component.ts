@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/fo
 import { Observable, Subscription } from 'rxjs';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
-import { debounceTime, map } from 'rxjs/operators';
+import { debounceTime, map, distinctUntilChanged } from 'rxjs/operators';
 
 import { SharedService } from '@app/shared/shared.service';
 import { UserService } from '../user.service';
@@ -116,14 +116,10 @@ export class UserSignupComponent implements OnInit {
 
     return this.userService.checkEmailUnique(control.value).pipe(
       debounceTime(500),
+      distinctUntilChanged(),
       map(value => value.found ? {emailUniqueValidator: true} : null)
     );
 
-    // return new Promise((resolve, reject) => {
-    //   this.userService.checkEmailUnique(control.value).subscribe((response: Response) => {
-    //     response.json().found ? resolve({emailUniqueValidator: true}) : resolve(null);
-    //   }, (error: any) => resolve({emailUniqueValidator: true}));
-    // });
   }
 
   matchingPasswords (password: string, confirm: string): any {

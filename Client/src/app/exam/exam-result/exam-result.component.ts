@@ -7,13 +7,13 @@ import { ExamService } from '../exam.service';
 import {
   Exam,
   Question,
+  ColorScheme,
   ExamReturn,
   QuestionAnswer,
   ExamAnalysis,
   AggregateExamQuestionAnalysis,
   GraphData,
   SeriesData,
-  ColorScheme,
   GraphDataSet,
   NumberCardDataSet
 } from '@class/index';

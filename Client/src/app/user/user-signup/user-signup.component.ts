@@ -8,7 +8,7 @@ import { debounceTime, map, distinctUntilChanged } from 'rxjs/operators';
 import { SharedService } from '@app/shared/shared.service';
 import { UserService } from '../user.service';
 
-import * as isMobilePhone from 'validator/lib/isMobilePhone';
+import isMobilePhone from 'validator/lib/isMobilePhone';
 import { User } from '@class/index';
 
 @Component({

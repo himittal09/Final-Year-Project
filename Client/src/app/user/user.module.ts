@@ -14,7 +14,7 @@ import { USER_ROUTES } from './user-routing.module';
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule,
+    RouterModule.forChild(USER_ROUTES),
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule

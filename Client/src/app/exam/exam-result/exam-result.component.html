@@ -182,8 +182,8 @@
           <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 centre">
             
             <ngx-charts-bar-horizontal-normalized
-              [results]="percentWhoAttemptedDataSet.graphData"
-              [scheme]="percentWhoAttemptedDataSet.graphColorScheme"
+              [results]="percentWhoAttemptedDataSet?.graphData"
+              [scheme]="percentWhoAttemptedDataSet?.graphColorScheme"
               [schemeType]="'ordinal'"
               [animations]="true"
               [legend]="true"
@@ -197,7 +197,7 @@
               [xAxisLabel]="'Percentage of Students'"
               [yAxisLabel]="'Questions'"
               [gradient]="false"
-              [view]="percentWhoAttemptedDataSet.graphSize"
+              [view]="percentWhoAttemptedDataSet?.graphSize"
               [barPadding]="8"
               [tooltipDisabled]="false">
             </ngx-charts-bar-horizontal-normalized>
@@ -206,8 +206,8 @@
             <br>
 
             <ngx-charts-bar-horizontal-normalized
-              [results]="percentWhoGotRight.graphData"
-              [scheme]="percentWhoGotRight.graphColorScheme"
+              [results]="percentWhoGotRight?.graphData"
+              [scheme]="percentWhoGotRight?.graphColorScheme"
               [schemeType]="'ordinal'"
               [animations]="true"
               [legend]="true"
@@ -221,7 +221,7 @@
               [xAxisLabel]="'Percentage of Students'"
               [yAxisLabel]="'Questions'"
               [gradient]="false"
-              [view]="percentWhoGotRight.graphSize"
+              [view]="percentWhoGotRight?.graphSize"
               [barPadding]="8"
               [tooltipDisabled]="false">
             </ngx-charts-bar-horizontal-normalized>
@@ -232,9 +232,9 @@
           </div>
           <div class="col-xs-12">
             <ngx-charts-number-card
-              [view]="studentsAttempted.graphSize"
-              [scheme]="studentsAttempted.graphColorScheme"
-              [results]="studentsAttempted.graphData"
+              [view]="studentsAttempted?.graphSize"
+              [scheme]="studentsAttempted?.graphColorScheme"
+              [results]="studentsAttempted?.graphData"
               [animations]="true"
               [cardColor]="'#d1cfcf'">
             </ngx-charts-number-card>
@@ -247,9 +247,9 @@
           </div>
           <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 centre">
             <ngx-charts-line-chart
-              [view]="marksComparison.graphSize"
-              [scheme]="marksComparison.graphColorScheme"
-              [results]="marksComparison.graphData"
+              [view]="marksComparison?.graphSize"
+              [scheme]="marksComparison?.graphColorScheme"
+              [results]="marksComparison?.graphData"
               [schemeType]="'ordinal'"
               [animations]="true"
               [legend]="true"
@@ -260,8 +260,8 @@
               [roundDomains]="true"
               [showXAxisLabel]="true"
               [showYAxisLabel]="true"
-              [xAxisLabel]="xAxisLabel"
-              [yAxisLabel]="yAxisLabel"
+              xAxisLabel="xAxisLabel"
+              yAxisLabel="yAxisLabel"
               [autoScale]="false"
               [gradient]="false"
               [tooltipDisabled]="false">
@@ -271,9 +271,9 @@
             <br>
 
             <ngx-charts-area-chart
-              [view]="timeComparison.graphSize"
-              [scheme]="timeComparison.graphColorScheme"
-              [results]="timeComparison.graphData"
+              [view]="timeComparison?.graphSize"
+              [scheme]="timeComparison?.graphColorScheme"
+              [results]="timeComparison?.graphData"
               [schemeType]="'ordinal'"
               [animations]="true"
               [legend]="true"
@@ -283,8 +283,8 @@
               [showGridLines]="false"
               [showXAxisLabel]="true"
               [showYAxisLabel]="true"
-              [xAxisLabel]="xAxisLabel"
-              [yAxisLabel]="yAxisLabel"
+              xAxisLabel="xAxisLabel"
+              yAxisLabel="yAxisLabel"
               [autoScale]="false"
               [gradient]="false"
               [tooltipDisabled]="false">

@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { SharedService } from '@app/shared/shared.service';
 import { UserService } from '../user.service';
 
-import * as isEmail from 'validator/lib/isEmail';
+import isEmail from 'validator/lib/isEmail';
 
 import { User } from '@class/index';
 
@@ -49,7 +49,6 @@ export class UserLoginComponent implements OnInit {
       this.sharedService.authenticate(1);
       this.router.navigate(['/exam']);
     }, (error: any) => {
-      throw error;
       if ( error.status === 405 ) {
         if (this.sharedService.isUserAuthenticated) {
           return this.router.navigate(['/exam']);
@@ -64,6 +63,7 @@ export class UserLoginComponent implements OnInit {
         // 400
         this.isLoginFailure = 1;
       }
+      throw error;
     }, () => this.subscription.unsubscribe());
   }
 

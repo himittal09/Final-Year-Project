@@ -9,6 +9,7 @@ export class Exam {
         public _id?: string,
         public __v?: number,
         public questions?: Question[],
-        public hasUserAttempted?: boolean
+        public hasUserAttempted?: boolean,
+        public createdAt?: Date
     ) {}
 }

@@ -1,8 +1,10 @@
 class SeriesData {
-    name: number | string;
-    value: number | string;
-    min?: number | string;
-    max?: number | string;
+    constructor (
+        public name: number | string,
+        public value: number | string,
+        public min?: number | string,
+        public max?: number | string
+    ) {}
 };
 
 class ColorScheme {

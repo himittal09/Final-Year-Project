@@ -1,9 +1,6 @@
 //importing required packages installed by npm
 const mongoose = require('mongoose');
 
-//for depricated Promise of mongoose
-mongoose.Promise = global.Promise;
-
 const ExamSchema = new mongoose.Schema({
     
     name: {
@@ -38,19 +35,6 @@ const ExamSchema = new mongoose.Schema({
     //'name', 'description', 'allowedTime', 'subject', 'questions', 'createdAt', '_id'
 
     //Schema definiton finishes here
-});
-
-/**
- * @param {any} this
- * document method
- */
-ExamSchema.pre('save', function (next) {
-
-    //converting the exam name into upper case
-    this.name = this.name.toUpperCase();
-    next();
-
-    //method ends here
 });
 
 /**
